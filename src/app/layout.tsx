@@ -22,7 +22,15 @@ export default async function RootLayout({
 }) {
 
   const boards = await getBoards()
-  const boardNames = boards.map((board: {name: string}) => board.name);
+  const { message, status } = boards;
+  let boardNames: string | string[];
+  
+  if(status === 'empty'){
+    boardNames = 'Empty Boards'
+  }else{
+    const convertMessageToObject = JSON.parse(message);
+    boardNames = convertMessageToObject.map((board: {name: string}) => board.name);
+  }
 
   return (
     <html lang="en">

@@ -1,5 +1,5 @@
 type HProps = {
-    boardNames: string[]
+    boardNames: string | string[]
 }
 
 const Header = ({ boardNames }: HProps) => {

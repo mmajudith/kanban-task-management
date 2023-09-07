@@ -7,6 +7,11 @@ export default async function Board({params: {boardName}}: { params: { boardName
     return (
         <main className=''>
           <h1>Board</h1>
+          {status === 'empty' ? (
+              <p>Board is empty</p>
+          ) : (
+              <p>{JSON.parse(message)[0].name}</p>
+          )}
         </main>
     )
   }
