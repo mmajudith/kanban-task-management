@@ -1,4 +1,4 @@
-import { getASingleBoard } from "../frontendApis/apis"
+import { getASingleBoard } from "../clientApis/apis"
 
 export default async function Board({params: {boardName}}: { params: { boardName: string}}) {
   const { message, status } = await getASingleBoard(boardName)

@@ -1,10 +1,11 @@
 import { Button, ConfigProvider } from 'antd';
 import theme from '../../themeConfig';
-import { getBoards } from './frontendApis/apis';
+import { getBoards } from './clientApis/apis';
 
 export default async function Home() {
   const boards = await getBoards()
   const { message, status } = boards;
+  const board = JSON.parse(message)
 			
   return (
     <ConfigProvider theme={theme}>
@@ -14,7 +15,7 @@ export default async function Home() {
             {status === 'empty' ? (
                 <p>Board is empty</p>
             ) : (
-                <p>{JSON.parse(message)[0].name}</p>
+                <p>{board[0].name}</p>
             )}
         <Button type='primary'>Click to dance</Button>
       </main>

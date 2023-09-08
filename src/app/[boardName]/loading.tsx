@@ -1,9 +1,7 @@
-const Loading = () => {
+export default function Loading() {
     return (
         <div>
-            <p>Loading Board...</p>
+            <p>Loading single...</p>
         </div>
     )
 }
-
-export default Loading

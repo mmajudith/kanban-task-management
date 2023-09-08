@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-// import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
-import { getBoards } from './frontendApis/apis';
+
+import { getBoards } from './clientApis/apis';
 import Header from './components/Header';
 import SiderBar from './components/SiderBar';
-
 import './globals.css';
 import StyledComponentsRegistry from '@/lib/AntdRegistry';
 
@@ -27,10 +26,10 @@ export default async function RootLayout({
   
   if(status === 'empty'){
     boardNames = 'Empty Boards'
-  }else{
-    const convertMessageToObject = JSON.parse(message);
-    boardNames = convertMessageToObject.map((board: {name: string}) => board.name);
   }
+  const convertMessageToObject = JSON.parse(message);
+  boardNames = convertMessageToObject.map((board: {name: string}) => board.name);
+
 
   return (
     <html lang="en">

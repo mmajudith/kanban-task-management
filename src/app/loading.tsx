@@ -1,7 +1,7 @@
-const Loading = () => {
+export default function Loading() {
     return (
-        <div>Loading Root page</div>
+        <div>
+            <p>Loading......</p>
+        </div>
     )
 }
-
-export default Loading
