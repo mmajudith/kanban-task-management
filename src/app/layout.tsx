@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import { getBoards } from './clientApis/apis';
+import Providers from './providers/provider';
+import DispatchData from './components/DispatchData';
 import Header from './components/Header';
-import SiderBar from './components/SiderBar';
+import SideBarNav from './components/SideBarNav';
 import './globals.css';
 import StyledComponentsRegistry from '@/lib/AntdRegistry';
 
@@ -14,31 +15,24 @@ export const metadata: Metadata = {
   description: 'App that allow user to plan their projects',
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
 
-  const boards = await getBoards()
-  const { message, status } = boards;
-  let boardNames: string | string[];
-  
-  if(status === 'empty'){
-    boardNames = 'Empty Boards'
-  }
-  const convertMessageToObject = JSON.parse(message);
-  boardNames = convertMessageToObject.map((board: {name: string}) => board.name);
-
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StyledComponentsRegistry>
-          <Header boardNames={boardNames}/>
-          <SiderBar boardNames={boardNames}/>
-          {children}
-        </StyledComponentsRegistry>
+            <Providers>
+              <StyledComponentsRegistry>
+                <DispatchData>
+                  <Header />
+                  <SideBarNav />
+                  {children}
+                </DispatchData>
+              </StyledComponentsRegistry>
+            </Providers>
       </body>
     </html>
   )
