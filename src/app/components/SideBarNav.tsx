@@ -1,15 +1,25 @@
 "use client";
 
 import Link from "next/link"
-import { useAppSelector } from "@/redux/app/hook";
+import { useAppSelector } from "@/redux/store/hook";
+import { Button, Layout } from 'antd';
+
+const { Sider } = Layout;
+
+const siderStyle: React.CSSProperties = {
+    width: 300,
+    height: '100%',
+    margin: 'auto',
+    backgroundColor: '#FFFFFF',
+};
 
 const SiderBarNav = () => {
     const boardsData = useAppSelector(state => state.boardsSlice);
-    const boardNames = boardsData?.boards?.map((board: {name: string}) => board.name);
+    // const boardNames = boardsData?.boards?.map((board: {name: string}) => board.name);
 
     return (
-        <div>
-            {boardsData.loading === 'pending' && (<p>Loading....</p>)}
+        <Sider style={siderStyle}>
+            {/* {boardsData.loading === 'pending' && (<p>Loading....</p>)}
             {boardsData.loading === 'rejected' && (<p>Please check your network</p>)}
             {boardsData.loading === 'fulfilled' && (
                     <ul>
@@ -22,11 +32,11 @@ const SiderBarNav = () => {
                             )
                         })}
                     </ul>
-            )}    
-            
+            )}     */}
+        
             <p>Create board</p>
         
-        </div>
+        </Sider>
     )
 }
 

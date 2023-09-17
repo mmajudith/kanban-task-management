@@ -1,14 +1,20 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import Providers from './providers/provider';
-import DispatchData from './components/DispatchData';
-import Header from './components/Header';
-import SideBarNav from './components/SideBarNav';
-import './globals.css';
 import StyledComponentsRegistry from '@/lib/AntdRegistry';
+import { Layout } from 'antd';
 
-const inter = Inter({ subsets: ['latin'] });
+import DispatchData from './components/DispatchData';
+import HeaderNav from './components/Header';
+import SideBarNav from './components/SideBarNav';
+
+import './globals.css';
+
+const plus = Plus_Jakarta_Sans({
+  weight:['200', '300', '400', '500', '600', '700', '800'], 
+  subsets: ['latin'], 
+  display: 'swap', 
+});
 
 export const metadata: Metadata = {
   title: 'Kanban Task Management',
@@ -23,16 +29,18 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
-            <Providers>
-              <StyledComponentsRegistry>
-                <DispatchData>
-                  <Header />
-                  <SideBarNav />
+      <body className={plus.className}>
+        <StyledComponentsRegistry>
+          <Providers>
+            <DispatchData>
+              <SideBarNav />
+                <Layout style={{width: '80%', height: '100%', background:'#E4EBFA'}}>
+                  <HeaderNav />
                   {children}
-                </DispatchData>
-              </StyledComponentsRegistry>
-            </Providers>
+                </Layout>
+            </DispatchData>
+          </Providers>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )

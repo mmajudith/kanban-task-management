@@ -2,7 +2,7 @@
  
 import React from 'react';
 import Provider from './react-redux-provider';
-import { store } from '../../redux/app/store';
+import { store } from '../../redux/store/store';
 
 const Providers = ({
     children,
