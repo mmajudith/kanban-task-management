@@ -14,8 +14,8 @@ export const GET = async (req: Request, { params }: {params: {boardName: string}
             return NextResponse.json({message, status});
         }
 
-        const replaceUnderscore = boardName.replaceAll('-', ' ');
-        const board = message.filter((board: {name: string}) => board.name === replaceUnderscore);
+        const replaceDash = boardName.replaceAll('-', ' ');
+        const board = message.filter((board: {name: string}) => board.name === replaceDash);
 
         
         return NextResponse.json({message: JSON.stringify(board), status});

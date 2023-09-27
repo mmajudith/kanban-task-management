@@ -4,9 +4,9 @@ import Providers from './providers/provider';
 import StyledComponentsRegistry from '@/lib/AntdRegistry';
 import { Layout } from 'antd';
 
-import DispatchData from './components/DispatchData';
-import HeaderNav from './components/Header';
-import SideBarNav from './components/SideBarNav';
+import DispatchData from './components/dispatchData/DispatchData';
+import HeaderNav from './components/header/Header';
+import SideBarNav from './components/sideBarNav/SideBarNav';
 
 import './globals.css';
 
@@ -29,13 +29,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={plus.className}>
+      <body className={plus.className} style={{fontSize: '1rem', fontWeight: 'normal'}}>
         <StyledComponentsRegistry>
           <Providers>
             <DispatchData>
-              <SideBarNav />
-                <Layout style={{width: '80%', height: '100%', background:'#E4EBFA'}}>
-                  <HeaderNav />
+                <HeaderNav />
+                <Layout style={{width: '100%', height:  `calc(100vh - 80px)`, position: 'relative'}} hasSider={true}>
+                  <SideBarNav />
                   {children}
                 </Layout>
             </DispatchData>
