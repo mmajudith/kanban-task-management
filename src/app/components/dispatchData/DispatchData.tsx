@@ -10,10 +10,17 @@ import { darkTheme } from './darkTheme';
 import { lightTheme } from './lightTheme';
 
 const layoutStyle: React.CSSProperties = {
+    width: '100%',
+    height: '100vh',
+    margin: 'auto',
+};
+
+const containerStyle: React.CSSProperties = {
     maxWidth: 1600,
     width: '100vw',
     height: '100vh',
     margin: 'auto',
+    position: 'relative'
 };
 
 
@@ -33,11 +40,13 @@ const DispatchData = ({ children, }: { children: React.ReactNode }) => {
     return (
         <ConfigProvider theme={ !currentTheme ? lightTheme : darkTheme }>
             <Layout style={layoutStyle}>
-                {isClient ? (
-                    <>{children}</>
-                ) : (
-                    <SpinnerLoader />
-                )}
+                <div style={containerStyle}>
+                    {isClient ? (
+                        <>{children}</>
+                    ) : (
+                        <SpinnerLoader />
+                    )}
+                </div>
             </Layout>
         </ConfigProvider>
     )
