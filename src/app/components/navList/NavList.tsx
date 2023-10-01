@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/redux/store/hook";
-import { Image, List, Typography } from 'antd';
+import BoardIcon from "../../../../public/assets/icon-board.svg";
+
+import { List, Typography } from 'antd';
 import { listContainer, listTitleStyle, listStyle, linkStyle, createBoardStyle} from './NavListStyles';
 
 
 const NavList = () => {
     const pathName = usePathname();
 
+    const { currentTheme } = useAppSelector(state => state.themeSlice);
     const boardsData = useAppSelector(state => state.boardsSlice);
     const boardNames = boardsData?.boards?.map((board: {name: string}) => board.name);
     const totalBoards = boardNames?.length
@@ -35,15 +38,13 @@ const NavList = () => {
                                 const isActive = pathName === href;
                                 return (
                                     <Link href={href} 
-                                        className={`${isActive && 'active'} flex-row flex-start`} 
+                                        className={`${isActive && 'active'} flex-row flex-start 
+                                            ${!currentTheme ? `hover-light` : `hover-dark`}`
+                                        } 
                                         style={linkStyle}
                                     >
-                                        <Image 
-                                            preview={false} 
-                                            src={`${isActive ? `/assets/icon-board-white.svg` : `/assets/icon-board.svg`}`} 
-                                            className="flex-row flex-start"
-                                        />
-                                        <List.Item style={listStyle}>{name}</List.Item>
+                                        <BoardIcon />
+                                        <List.Item style={listStyle} className="text">{name}</List.Item>
                                     </Link>
                                 )
                             }}
@@ -54,11 +55,7 @@ const NavList = () => {
                 )}
                 
                 <div style={createBoardStyle} className="flex-row flex-start">
-                    <Image 
-                        preview={false} 
-                        src="/assets/icon-purple-board.svg"
-                        className="flex-row flex-start"
-                    />
+                    <BoardIcon className='board-icon-purple'/>
                     <Typography.Text style={{paddingLeft: 15, color:'#635FC7'}}>
                         + Create New Board
                     </Typography.Text>

@@ -1,13 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Image, Layout, Typography, Grid } from 'antd';
+import ThemeSwitcher from "../ThemeSwitcher";
+import HideIcon from "../../../../public/assets/icon-hide-sidebar.svg";
+import ShowIcon from "../../../../public/assets/icon-show-sidebar.svg";
+
+import { Layout, Typography, Grid } from 'antd';
 import { siderStyle, siderContainerStyle, hideSiderContainer, showSider} from './siderStyles';
 import NavList from "../navList/NavList";
-import ThemeSwitcher from "../ThemeSwitcher";
+import { useAppSelector } from "@/redux/store/hook";
 
 const SiderBarNav = () => {
     const [ collapse, setCollapse ] = useState(false);
+    const { currentTheme } = useAppSelector(state => state.themeSlice);
 
     const { useBreakpoint } = Grid;
     const { xl, md } = useBreakpoint();
@@ -31,26 +36,26 @@ const SiderBarNav = () => {
                             <ThemeSwitcher />
                             <div 
                                 onClick={collapseHandler}
-                                className="flex-row flex-start"  
+                                className={`flex-row flex-start ${!currentTheme ? `hover-light` : `hover-dark`}`} 
                                 style={hideSiderContainer}
                             >
-                                <Image preview={false} src="/assets/icon-hide-sidebar.svg" className="flex-row flex-start"/>
-                                <Typography.Text style={{color: '#828FA3'}}>Hide Sidebar</Typography.Text>
+                                <HideIcon />
+                                <Typography.Text 
+                                    className="text"
+                                >
+                                    Hide Sidebar
+                                </Typography.Text>
                             </div>
                         </div>   
                     </div>
                 </Layout.Sider>
             )}
             {collapse && (
-                <div
+                <ShowIcon 
                     onClick={collapseHandler}
                     style={{...showSider, display: md ? 'block' : 'none'}}
-                >
-                    <Image
-                        preview={false} 
-                        src="/assets/icon-show-sidebar.svg" alt="show sidebar icon"
-                    />
-                </div>
+                    className='show-sidebar'
+                />
             )}
         </>
 

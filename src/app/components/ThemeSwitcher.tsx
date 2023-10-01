@@ -23,7 +23,7 @@ const ThemeSwitcher = () => {
     >
         <Image preview={false} src="/assets/icon-light-theme.svg" className="flex-row flex-start"/>
         <Switch 
-            style={{backgroundColor: '#635fc7'}}
+            className="switch"
             checked={currentTheme} 
             onChange={() => dispatch(toggleTheme())}
         />

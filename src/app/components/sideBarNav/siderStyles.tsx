@@ -15,17 +15,16 @@ export const siderContainerStyle: CSSProperties = {
 
 export const hideSiderContainer: CSSProperties = {
     width: 'content-fit',
-    paddingLeft: 23, 
+    height: 45,
+    paddingLeft: 23,
+    marginRight: 23,
+    marginTop: 10, 
     gap: 15, 
     cursor: 'pointer', 
-    marginTop: 23,
-    marginBottom: 47
+    marginBottom: 47,
 };
     
 export const showSider: CSSProperties = {
-    width: 'content-fit',
-    height: 'content-fit', 
-    margin: 'auto',
     cursor: 'pointer', 
     position: 'absolute', 
     left: 0, 

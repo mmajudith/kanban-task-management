@@ -2,7 +2,8 @@ export const lightTheme = {
     token: { 
         colorPrimary: '#635fc7', 
         colorBgElevated: '#FFF',
-        colorText: '#828FA3'
+        colorText: '#828FA3',
+        colorPrimaryHover: '#A8A4FF',
     },
     components: {
         Layout: {
@@ -12,6 +13,6 @@ export const lightTheme = {
         },
         Typography: {
             colorText: '#000112'
-        }
+        }, 
     }
 }

@@ -5,9 +5,12 @@ import { useState } from "react";
 import { useAppSelector } from "@/redux/store/hook";
 import NavList from "../navList/NavList";
 import ThemeSwitcher from "../ThemeSwitcher";
+import AddIcon from "../../../../public/assets/icon-add-task-mobile.svg";
+import DotsIcon from "../../../../public/assets/icon-dots.svg";
+import ArrowIcon from "../../../../public/assets/icon-arrow.svg";
+
 import type { MenuProps } from "antd";
 import { Layout, Image, Typography, Grid, Button, Dropdown, Space} from "antd";
-
 import { headerStyle, logoStyle, headerTitleStyle, 
     addTaskStyle, headerListCon, listThemeCon, navModalStyle 
 } from "./headerStyles";
@@ -55,11 +58,8 @@ const HeaderNav = () => {
                         {boardNames?.length > 0 && (pathName === '/' ? boardNames[0] : pathName.replace(/[/-]/g, ' '))}
                     </Typography.Text>
                     {!md && (
-                        <Image 
+                        <ArrowIcon
                             onClick={isOpenHandler}
-                            preview={false}
-                            src="/assets/icon-arrow.svg"
-                            alt="arrow down icon"
                             style={{cursor: 'pointer', transform: isOpen? "rotate(0deg)" : "rotate(-180deg)"}}
                         />
                     )}
@@ -75,15 +75,16 @@ const HeaderNav = () => {
                 
                 <Space size={sm ? 20:10}>
                     <Button type="primary" style={{...addTaskStyle,  width: md? 164:45, height:md? 48:32}}>
-                        {md ? ('+ Add New Task') : ( <Image preview={false} src={`/assets/icon-add-task-mobile.svg`} alt="add mobile icon" />)}
+                        {md ? ('+ Add New Task') : ( <AddIcon />)}
                     </Button>
                         
-                    <Dropdown menu={{items}} placement="bottomRight" trigger={["click"]} overlayStyle={{width: 192}}>
-                        <Image preview={false} 
-                            src={`/assets/icon-dots.svg`} 
-                            alt="site logo"
-                            style={{cursor: 'pointer'}}
-                        />
+                    <Dropdown 
+                        menu={{items}} 
+                        placement="bottomRight" 
+                        trigger={["click"]} 
+                        overlayStyle={{width: 192, top: 85}}
+                    >
+                        <DotsIcon style={{cursor: 'pointer'}} className="flex-col center"/>
                     </Dropdown>
                 </Space>
             </div>

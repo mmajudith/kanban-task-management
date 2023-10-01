@@ -2,7 +2,8 @@ export const darkTheme = {
     token: { 
         colorPrimary: '#635fc7', 
         colorBgElevated: '#20212C', 
-        colorText: '#828FA3'
+        colorText: '#828FA3',
+        colorPrimaryHover: '#A8A4FF',
     },
     components: {
         Layout: {
@@ -13,5 +14,6 @@ export const darkTheme = {
         Typography: {
             colorText: '#FFF'
         }
+        
     }
 }

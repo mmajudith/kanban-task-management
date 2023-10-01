@@ -47,3 +47,57 @@ ul{
 .active li{
     color: #FFF !important;
 }
+
+.active svg path{
+    fill: #FFF
+}
+
+.board-icon-purple path{
+    fill: #635FC7
+}
+
+.switch{
+    background-color: #635fc7 !important;
+}
+
+.switch:hover{
+    background-color: #A8A4FF !important;
+}
+
+.text{
+    color: #828FA3 !important;
+    font-weight: 600;
+}
+
+/****** navigation light mode hover ******/
+.hover-light:hover{
+    background-color: rgb(239,239,249);
+    border-radius: 0px 100px 100px 0px;
+}
+
+.hover-light:hover .text{
+    color: #635FC7 !important;
+}
+
+.hover-light:hover svg path {
+    fill: #635FC7 !important;
+}
+
+/****** navigation dark mode hover ******/
+.hover-dark:hover{
+    background-color: #FFF;
+    border-radius: 0px 100px 100px 0px;
+}
+
+.hover-dark:hover .text{
+    color: #635FC7 !important;
+}
+
+.hover-dark:hover svg path {
+    fill: #635FC7 !important;
+}
+
+/* Show sidebar hover style */
+.show-sidebar path:first-child:hover{
+    fill: #A8A4FF;
+}

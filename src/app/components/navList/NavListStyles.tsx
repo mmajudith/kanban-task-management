@@ -14,17 +14,18 @@ export const listTitleStyle: CSSProperties = {
     letterSpacing: 2.4
 };
 
-export const listStyle: CSSProperties = {
-    padding: 0, 
-    margin: 0, 
-    paddingLeft: 15, 
-    color: '#828FA3'
-};
 
 export const linkStyle: CSSProperties = {
     height: 45, 
     paddingLeft: 23, 
+    marginRight: 23,
     fontWeight: 500
+};
+
+export const listStyle: CSSProperties = {
+    padding: 0, 
+    margin: 0, 
+    paddingLeft: 15,
 };
 
 export const createBoardStyle: CSSProperties = {
