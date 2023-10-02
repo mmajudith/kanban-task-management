@@ -1,9 +1,9 @@
-const SERVER_ENDPOINT = process.env.SERVER_ENDPOINT || 'http://localhost:3000';
+// const SERVER_ENDPOINT = process.env.PORT || 'http://localhost:3000';
 
 //Fetches all the boards
 export const getBoards = async () => {
     try {
-        const res = await fetch(`${SERVER_ENDPOINT}/api`, { cache: "no-cache" });
+        const res = await fetch('/api', { cache: "no-cache" });
         const data = await res.json();
 
         return data;
@@ -16,7 +16,7 @@ export const getBoards = async () => {
 //Fetch a single board
 export const getASingleBoard = async (boardName: string) => {
     try {
-        const res = await fetch(`${SERVER_ENDPOINT}/api/${boardName}`, { cache: "no-cache" });
+        const res = await fetch(`/api/${boardName}`, { cache: "no-cache" });
         const board = await res.json();
 
         return board;
