@@ -82,7 +82,7 @@ const HeaderNav = () => {
                         menu={{items}} 
                         placement="bottomRight" 
                         trigger={["click"]} 
-                        overlayStyle={{width: 192, top: 85}}
+                        overlayStyle={{width: 192, top: 80}}
                     >
                         <DotsIcon style={{cursor: 'pointer'}} className="flex-col center"/>
                     </Dropdown>
