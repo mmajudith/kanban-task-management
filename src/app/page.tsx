@@ -2,7 +2,6 @@
 
 import { useAppSelector } from '@/redux/store/hook';
 import { Button, ConfigProvider, Layout } from 'antd';
-import theme from '../../themeConfig';
 
 const { Content } = Layout;
 
