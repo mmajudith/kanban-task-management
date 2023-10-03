@@ -2,7 +2,7 @@
 
 import { Image, Switch } from "antd";
 
-import { toggleTheme } from "@/redux/features/utilitiesReducer";
+import { toggleTheme } from "@/redux/actions/themeAction";
 import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
 
 const switchContainerStyle: React.CSSProperties = {
@@ -14,17 +14,17 @@ const switchContainerStyle: React.CSSProperties = {
 };
 
 const ThemeSwitcher = () => {
-    const { currentTheme } = useAppSelector(state => state.themeSlice);
+    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
     const dispatch = useAppDispatch();
 
     return(
-        <div style={{...switchContainerStyle, backgroundColor: !currentTheme? '#F4F7FD' : '#20212C'}}
+        <div style={{...switchContainerStyle, backgroundColor: !isDark? '#F4F7FD' : '#20212C'}}
         className="flex-row center"
     >
         <Image preview={false} src="/assets/icon-light-theme.svg" className="flex-row flex-start"/>
         <Switch 
             className="switch"
-            checked={currentTheme} 
+            checked={isDark} 
             onChange={() => dispatch(toggleTheme())}
         />
         <Image preview={false} src="/assets/icon-dark-theme.svg" className="flex-row flex-start"/>

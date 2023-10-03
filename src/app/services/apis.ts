@@ -1,5 +1,3 @@
-// const SERVER_ENDPOINT = process.env.PORT || 'http://localhost:3000';
-
 //Fetches all the boards
 export const getBoards = async () => {
     try {

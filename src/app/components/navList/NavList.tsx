@@ -12,7 +12,7 @@ import { listContainer, listTitleStyle, listStyle, linkStyle, createBoardStyle} 
 const NavList = () => {
     const pathName = usePathname();
 
-    const { currentTheme } = useAppSelector(state => state.themeSlice);
+    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
     const boardsData = useAppSelector(state => state.boardsSlice);
     const boardNames = boardsData?.boards?.map((board: {name: string}) => board.name);
     const totalBoards = boardNames?.length
@@ -39,7 +39,7 @@ const NavList = () => {
                                 return (
                                     <Link href={href} 
                                         className={`${isActive && 'active'} flex-row flex-start 
-                                            ${!currentTheme ? `hover-light` : `hover-dark`}`
+                                            ${!isDark ? `hover-light` : `hover-dark`}`
                                         } 
                                         style={linkStyle}
                                     >

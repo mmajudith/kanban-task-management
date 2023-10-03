@@ -1,20 +1,21 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+"use client";
 
-type ThemeState = {
-    currentTheme: boolean
+import { createSlice } from '@reduxjs/toolkit';
+import { toggleTheme } from '../actions/themeAction';
+
+const initialState = {
+    currentTheme: JSON.parse(typeof window !== "undefined" && window.localStorage.getItem('theme') || '{}') || null,
 }
 
 export const themeSlice = createSlice({
   name: 'theme',
-  initialState: { currentTheme: false } as ThemeState,
-  reducers: {
-    toggleTheme: (state ) => {
-        state.currentTheme = !state.currentTheme;
-    },
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(toggleTheme.fulfilled, (state, { payload }) => {
+			state.currentTheme = payload;
+		});
   },
-  extraReducers: (builder) => {},
 })
-
-export const { toggleTheme } = themeSlice.actions
 
 export default themeSlice.reducer

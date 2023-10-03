@@ -21,7 +21,7 @@ const HeaderNav = () => {
     const pathName = usePathname();
 
     const [isOpen, setIsOpen] = useState(false)
-    const { currentTheme } = useAppSelector(state => state.themeSlice);
+    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
     const boardsData = useAppSelector(state => state.boardsSlice);
     const boardNames = boardsData?.boards?.map((board: {name: string}) => board.name);
 
@@ -37,11 +37,11 @@ const HeaderNav = () => {
         <Layout.Header style={headerStyle} className="flex-row between">
             {md ? (
                 <div 
-                    style={{...logoStyle, width: logoWidth, borderRightColor: !currentTheme ? '#E4EBFA' : '#3E3F4E'}} 
+                    style={{...logoStyle, width: logoWidth, borderRightColor: !isDark ? '#E4EBFA' : '#3E3F4E'}} 
                     className="flex-row flex-start"
                 >
                     <Image preview={false} 
-                        src={`${!currentTheme ? `/assets/logo-dark.svg`:`/assets/logo-light.svg`}`} 
+                        src={`${!isDark ? `/assets/logo-dark.svg`:`/assets/logo-light.svg`}`} 
                         alt="site desktop logo"
                     />
                 </div>
@@ -66,7 +66,7 @@ const HeaderNav = () => {
                 </div>
                 {!md && isOpen && (
                     <div style={navModalStyle}>
-                        <div style={{...listThemeCon, background: !currentTheme? '#FFFFFF':'#2B2C37'}}>
+                        <div style={{...listThemeCon, background: !isDark? '#FFFFFF':'#2B2C37'}}>
                             <NavList />
                             <ThemeSwitcher />
                         </div>

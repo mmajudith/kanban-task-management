@@ -12,7 +12,7 @@ import { useAppSelector } from "@/redux/store/hook";
 
 const SiderBarNav = () => {
     const [ collapse, setCollapse ] = useState(false);
-    const { currentTheme } = useAppSelector(state => state.themeSlice);
+    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
 
     const { useBreakpoint } = Grid;
     const { xl, md } = useBreakpoint();
@@ -26,7 +26,7 @@ const SiderBarNav = () => {
         <>
             {!collapse && (
                 <Layout.Sider 
-                    style={siderStyle} 
+                    style={{...siderStyle, backgroundColor: !isDark ? '#FFFFFF' : '#2B2C37'}} 
                     width={siderWidth} 
                 >
                     <div style={siderContainerStyle}>
@@ -36,7 +36,7 @@ const SiderBarNav = () => {
                             <ThemeSwitcher />
                             <div 
                                 onClick={collapseHandler}
-                                className={`flex-row flex-start ${!currentTheme ? `hover-light` : `hover-dark`}`} 
+                                className={`flex-row flex-start ${!isDark ? `hover-light` : `hover-dark`}`} 
                                 style={hideSiderContainer}
                             >
                                 <HideIcon />

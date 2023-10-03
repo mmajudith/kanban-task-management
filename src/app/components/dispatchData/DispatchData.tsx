@@ -25,7 +25,7 @@ const containerStyle: React.CSSProperties = {
 
 
 const DispatchData = ({ children, }: { children: React.ReactNode }) => {
-    const { currentTheme } = useAppSelector(state => state.themeSlice);
+    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
     const dispatch = useAppDispatch();
 
     const [ isClient, setIsClient ] = useState(false);
@@ -38,7 +38,7 @@ const DispatchData = ({ children, }: { children: React.ReactNode }) => {
     }, [dispatch]);
 
     return (
-        <ConfigProvider theme={ !currentTheme ? lightTheme : darkTheme }>
+        <ConfigProvider theme={ !isDark ? lightTheme : darkTheme }>
             <Layout style={layoutStyle}>
                 <div style={containerStyle}>
                     {isClient ? (
