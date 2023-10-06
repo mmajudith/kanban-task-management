@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/redux/store/hook";
-import BoardIcon from "../../../../public/assets/icon-board.svg";
+import BoardIcon from "../../../public/assets/icon-board.svg";
 
 import { List, Typography } from 'antd';
 import { listContainer, listTitleStyle, listStyle, linkStyle, createBoardStyle} from './NavListStyles';
@@ -13,20 +13,20 @@ const NavList = () => {
     const pathName = usePathname();
 
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
-    const boardsData = useAppSelector(state => state.boardsSlice);
-    const boardNames = boardsData?.boards?.map((board: {name: string}) => board.name);
+    const boards = useAppSelector(state => state.boardsSlice);
+    const boardNames = boards.boards?.map((board: {name: string}) => board.name);
     const totalBoards = boardNames?.length
  
     return (
         <>   
-            {boardsData.loading === 'pending' && (null)}
-            {boardsData.loading === 'rejected' && (null)}
+            {boards.loading === 'pending' && (null)}
+            {boards.loading === 'rejected' && (null)}
 
             <div style={listContainer}>
                 <Typography.Text style={listTitleStyle}>
                     All Boards ({totalBoards}) 
                 </Typography.Text>
-                {boardsData.loading === 'fulfilled' && (
+                {boards.loading === 'fulfilled' && (
                     boardNames?.length > 0 ? (
                         <List 
                             className="w-100"

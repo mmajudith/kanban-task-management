@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import ThemeSwitcher from "../ThemeSwitcher";
+import ThemeSwitcher from "../../../shared-components/ThemeSwitcher";
 import HideIcon from "../../../../public/assets/icon-hide-sidebar.svg";
 import ShowIcon from "../../../../public/assets/icon-show-sidebar.svg";
 
 import { Layout, Typography, Grid } from 'antd';
 import { siderStyle, siderContainerStyle, hideSiderContainer, showSider} from './siderStyles';
-import NavList from "../navList/NavList";
+import NavList from "../../../shared-components/navList/NavList";
 import { useAppSelector } from "@/redux/store/hook";
 
 const SiderBarNav = () => {
@@ -26,8 +26,9 @@ const SiderBarNav = () => {
         <>
             {!collapse && (
                 <Layout.Sider 
-                    style={{...siderStyle, backgroundColor: !isDark ? '#FFFFFF' : '#2B2C37'}} 
+                    style={{...siderStyle}} 
                     width={siderWidth} 
+                    theme={`${!isDark ? 'light' : 'dark'}`} 
                 >
                     <div style={siderContainerStyle}>
                         <NavList />

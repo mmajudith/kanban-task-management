@@ -56,6 +56,10 @@ ul{
     fill: #635FC7
 }
 
+.btn-hover:hover{
+    background-color: #A8A4FF !important;
+}
+
 .switch{
     background-color: #635fc7 !important;
 }

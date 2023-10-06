@@ -1,4 +1,4 @@
-"use client"
+"use client";
  
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store/hook';
@@ -29,7 +29,7 @@ const DispatchData = ({ children, }: { children: React.ReactNode }) => {
     const dispatch = useAppDispatch();
 
     const [ isClient, setIsClient ] = useState(false);
-
+    
     useEffect(() => {
 
         dispatch(fetchBoards());
@@ -37,15 +37,13 @@ const DispatchData = ({ children, }: { children: React.ReactNode }) => {
 
     }, [dispatch]);
 
+    if(!isClient) return  <SpinnerLoader />
+
     return (
         <ConfigProvider theme={ !isDark ? lightTheme : darkTheme }>
-            <Layout style={layoutStyle}>
+            <Layout style={layoutStyle} hasSider={false}>
                 <div style={containerStyle}>
-                    {isClient ? (
-                        <>{children}</>
-                    ) : (
-                        <SpinnerLoader />
-                    )}
+                    {children} 
                 </div>
             </Layout>
         </ConfigProvider>

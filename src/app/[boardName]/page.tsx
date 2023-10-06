@@ -1,18 +1,18 @@
-import { getASingleBoard } from "../services/apis";
-import { Layout } from "antd";
+"use client";
 
-const { Content } = Layout;
+import { useBoard } from "@/hook/useBoard";
+import { Layout, Grid } from "antd";
+import SingleBoard from "../../shared-components/singleboard/SingleBoard";
 
-export default async function Board({params: {boardName}}: { params: { boardName: string}}) {
-  const board = await getASingleBoard(boardName);
-  const { message, status } = board;
-  const singleBoard = JSON.parse(message)
-  console.log(board, 'single board');
-                  
-    return (
-        <Content>
-          <h1>Board</h1>
-          {<p>{singleBoard[0].name}</p>}
-        </Content>
-    )
-  }
+export default function Board({params: {boardName}}: { params: { boardName: string}}) {
+  const [ board ] = useBoard(boardName);
+  const { useBreakpoint } = Grid;
+  const { xl, md } = useBreakpoint();
+  const siderWidth = xl ? 300 : md ? 280 : 0;   
+
+  return (
+      <Layout.Content style={{width:`calc(100% - ${siderWidth}px)`}}>
+        <SingleBoard board={ board }/>
+      </Layout.Content>
+  )
+}

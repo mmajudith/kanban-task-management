@@ -1,22 +1,22 @@
 "use client";
 
 import { useAppSelector } from '@/redux/store/hook';
-import { Button, ConfigProvider, Layout } from 'antd';
-
-const { Content } = Layout;
+import { useBoard } from '@/hook/useBoard';
+import { Layout, Grid } from 'antd';
+import SingleBoard from '../shared-components/singleboard/SingleBoard';
 
 export default function Home() {
   const boardsData = useAppSelector(state => state.boardsSlice);
-	
-  return (
-    <Content>
-      <h1>Main Page</h1>
-      <Button type='primary'>Button</Button>
-      <Button type='primary'>Click to dance</Button>
+  const boardNames = boardsData.boards?.map((board: {name: string}) => board.name);
+  const [ board ] = useBoard(boardNames && boardNames.length > 0 ? boardNames[0] : undefined);
 
-      {/* {boardsData.loading === 'pending' && (<p>Loading....</p>)}
-      {boardsData.loading === 'rejected' && (<p>Please check your network</p>)}
-      {boardsData.loading === 'fulfilled' && (<p>{boardsData.boards[0].name}</p>)} */}
-    </Content>
+  const { useBreakpoint } = Grid;
+  const { xl, md } = useBreakpoint();
+  const siderWidth = xl ? 300 : md ? 280 : 0;   
+
+  return (
+    <Layout.Content style={{width:`calc(100% - ${siderWidth}px)`}}>
+      <SingleBoard board={ board }/>
+    </Layout.Content>
   )
 }

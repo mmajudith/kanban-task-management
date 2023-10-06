@@ -1,30 +1,30 @@
 "use client"
 
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "@/redux/store/hook";
-import NavList from "../navList/NavList";
-import ThemeSwitcher from "../ThemeSwitcher";
-import AddIcon from "../../../../public/assets/icon-add-task-mobile.svg";
-import DotsIcon from "../../../../public/assets/icon-dots.svg";
+import NavList from "../../../shared-components/navList/NavList";
+import ThemeSwitcher from "../../../shared-components/ThemeSwitcher";
+import BoardTask from "../boardTask/BoardTask";
 import ArrowIcon from "../../../../public/assets/icon-arrow.svg";
 
-import type { MenuProps } from "antd";
-import { Layout, Image, Typography, Grid, Button, Dropdown, Space} from "antd";
+import { Layout, Image, Typography, Grid } from "antd";
 import { headerStyle, logoStyle, headerTitleStyle, 
-    addTaskStyle, headerListCon, listThemeCon, navModalStyle 
+     headerListCon, listThemeCon, navModalStyle 
 } from "./headerStyles";
 
-const items: MenuProps['items'] = [{key: '1', label: 'Edit Board'}, {key: '2', label: 'Delete Board', danger: true}]
+
 
 const HeaderNav = () => {
     const pathName = usePathname();
+    const removedSpecialChar = pathName.replace(/[/-]/g, ' ').trim()
 
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [boardColumn, setBoardColumn] = useState<{name: string}[]>();
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
     const boardsData = useAppSelector(state => state.boardsSlice);
-    const boardNames = boardsData?.boards?.map((board: {name: string}) => board.name);
-
+    const boardNames = boardsData.boards?.map((board: {name: string}) => board.name);
+ 
     const { useBreakpoint } = Grid;
     const { xl, md, sm } = useBreakpoint();
     const logoWidth = xl ? 300 : md ? 280 : 50;
@@ -32,6 +32,19 @@ const HeaderNav = () => {
     const isOpenHandler = () => {
         setIsOpen(!isOpen);
     }
+
+    useEffect(() => {
+        if(boardsData.boards){
+            const column = boardsData.boards.filter((board: {name: string, column: []}, index) => {
+            if(pathName === '/'){
+                return index === 0
+            }
+                return board.name === removedSpecialChar
+            });
+            setBoardColumn(column);
+        }
+        
+    }, [boardsData.boards, pathName]);
 
     return (
         <Layout.Header style={headerStyle} className="flex-row between">
@@ -50,12 +63,12 @@ const HeaderNav = () => {
             )}
            
             <div 
-                style={{...headerListCon, width: `calc(100% - ${logoWidth}px)`, paddingLeft: sm? 23:10 }} 
+                style={{...headerListCon, width: `calc(100% - ${logoWidth}px)`, paddingLeft: sm ? 23 : 10 }} 
                 className="flex-row between"
             >
                 <div className="flex-row center" style={{gap:7}}>
                     <Typography.Text style={{...headerTitleStyle, fontSize: sm ? 24 : 16}}>
-                        {boardNames?.length > 0 && (pathName === '/' ? boardNames[0] : pathName.replace(/[/-]/g, ' '))}
+                        {boardNames?.length > 0 && (pathName === '/' ? boardNames[0] : removedSpecialChar)}
                     </Typography.Text>
                     {!md && (
                         <ArrowIcon
@@ -73,23 +86,14 @@ const HeaderNav = () => {
                     </div>
                 )}
                 
-                <Space size={sm ? 20:10}>
-                    <Button type="primary" style={{...addTaskStyle,  width: md? 164:45, height:md? 48:32}}>
-                        {md ? ('+ Add New Task') : ( <AddIcon />)}
-                    </Button>
-                        
-                    <Dropdown 
-                        menu={{items}} 
-                        placement="bottomRight" 
-                        trigger={["click"]} 
-                        overlayStyle={{width: 192, top: 80}}
-                    >
-                        <DotsIcon style={{cursor: 'pointer'}} className="flex-col center"/>
-                    </Dropdown>
-                </Space>
+                <BoardTask
+                    boardColumn={boardColumn} 
+                    md={md}
+                    sm={sm}
+                />
             </div>
         </Layout.Header>
     )
 }
 
-export default HeaderNav
+export default HeaderNav;

@@ -34,7 +34,10 @@ export default function RootLayout({
           <Providers>
             <DispatchData>
                 <HeaderNav />
-                <Layout style={{width: '100%', height:  `calc(100vh - 80px)`, position: 'relative'}} hasSider={true}>
+                <Layout 
+                  style={{width: '100%', height: `calc(100vh - 80px)`, margin: 'auto', position: 'relative'}} 
+                  hasSider={true}
+                >
                   <SideBarNav />
                   {children}
                 </Layout>

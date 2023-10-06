@@ -14,6 +14,5 @@ export const darkTheme = {
         Typography: {
             colorText: '#FFF'
         }
-        
     }
 }

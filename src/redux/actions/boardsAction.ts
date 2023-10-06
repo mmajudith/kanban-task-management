@@ -7,9 +7,8 @@ export const fetchBoards = createAsyncThunk(
     async () => {
       try{
         const data = await getBoards();
-        const { message } = data;
-        const boards = JSON.parse(message);
-
+        const boards = JSON.parse(data.message);
+  
         return boards;
 
       }catch(err){
