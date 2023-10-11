@@ -1,8 +1,12 @@
 import { CSSProperties} from "react";
 
 export const siderStyle: CSSProperties = {
-    height: '100%',
+    height: `calc(100vh - 80px)`,
     margin: 'auto', 
+    borderRightWidth: 1,
+    borderRightStyle: 'solid',
+    position: 'fixed',
+    zIndex: 2
 };
 
 export const siderContainerStyle: CSSProperties = {
@@ -26,7 +30,7 @@ export const hideSiderContainer: CSSProperties = {
     
 export const showSider: CSSProperties = {
     cursor: 'pointer', 
-    position: 'absolute', 
-    left: 0, 
-    bottom: 47
+    position: 'fixed', 
+    bottom: 47,
+    zIndex: 2
 };

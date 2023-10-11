@@ -8,8 +8,11 @@ import BoardIcon from "../../../public/assets/icon-board.svg";
 import { List, Typography } from 'antd';
 import { listContainer, listTitleStyle, listStyle, linkStyle, createBoardStyle} from './NavListStyles';
 
+type NLProps = {
+    isOpenHandler?: () => void
+}
 
-const NavList = () => {
+const NavList = ({isOpenHandler}: NLProps) => {
     const pathName = usePathname();
 
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
@@ -42,6 +45,7 @@ const NavList = () => {
                                             ${!isDark ? `hover-light` : `hover-dark`}`
                                         } 
                                         style={linkStyle}
+                                        onClick={isOpenHandler}
                                     >
                                         <BoardIcon />
                                         <List.Item style={listStyle} className="text">{name}</List.Item>

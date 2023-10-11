@@ -11,14 +11,14 @@ import { lightTheme } from './lightTheme';
 
 const layoutStyle: React.CSSProperties = {
     width: '100%',
-    height: '100vh',
+    height: '100%',
     margin: 'auto',
 };
 
 const containerStyle: React.CSSProperties = {
     maxWidth: 1600,
-    width: '100vw',
-    height: '100vh',
+    width: '100%',
+    height: '100%',
     margin: 'auto',
     position: 'relative'
 };

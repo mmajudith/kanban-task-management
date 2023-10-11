@@ -47,7 +47,10 @@ const HeaderNav = () => {
     }, [boardsData.boards, pathName]);
 
     return (
-        <Layout.Header style={headerStyle} className="flex-row between">
+        <Layout.Header 
+            style={headerStyle} 
+            className="flex-row between"
+        >
             {md ? (
                 <div 
                     style={{...logoStyle, width: logoWidth, borderRightColor: !isDark ? '#E4EBFA' : '#3E3F4E'}} 
@@ -63,7 +66,12 @@ const HeaderNav = () => {
             )}
            
             <div 
-                style={{...headerListCon, width: `calc(100% - ${logoWidth}px)`, paddingLeft: sm ? 23 : 10 }} 
+                style={{
+                    ...headerListCon, width: `calc(100% - ${logoWidth}px)`, 
+                    paddingLeft: sm ? 23 : 10,
+                    borderBottomColor: !isDark ? '#E4EBFA' : '#3E3F4E' ,
+                    borderBottomWidth: md ? 1 : 0,
+                }} 
                 className="flex-row between"
             >
                 <div className="flex-row center" style={{gap:7}}>
@@ -80,7 +88,7 @@ const HeaderNav = () => {
                 {!md && isOpen && (
                     <div style={navModalStyle}>
                         <div style={{...listThemeCon, background: !isDark? '#FFFFFF':'#2B2C37'}}>
-                            <NavList />
+                            <NavList isOpenHandler={isOpenHandler}/>
                             <ThemeSwitcher />
                         </div>
                     </div>

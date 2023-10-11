@@ -25,7 +25,7 @@ const BoardTask = ({boardColumn, md, sm}: AddTaskProps) => {
                     backgroundColor: boardColumn?.length ? '#635FC7' : '#d8d7f1',
                     cursor: boardColumn?.length ? 'pointer' : 'auto',
                 }}
-                className={`${boardColumn?.length && `btn-hover`}`}
+                className={`${boardColumn?.length && `btn-hover`} flex-row center`}
             >
                 {md ? ('+ Add New Task') : ( <AddIcon />)}
             </Button>

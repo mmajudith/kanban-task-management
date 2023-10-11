@@ -1,3 +1,4 @@
+/* Tags resetment */
 *{
     padding: 0;
     margin: 0;
@@ -8,6 +9,7 @@ ul{
     list-style: none;
 }
 
+/* Reuseable classes */
 .flex-row {
     display: flex;
     flex-direction: row;
@@ -38,6 +40,7 @@ ul{
     width: 100%;
 }
 
+/* Navigation list active styles */
 .active{
     width: calc(100% - 23px);
     background-color: #635fc7;
@@ -57,14 +60,6 @@ ul{
 }
 
 .btn-hover:hover{
-    background-color: #A8A4FF !important;
-}
-
-.switch{
-    background-color: #635fc7 !important;
-}
-
-.switch:hover{
     background-color: #A8A4FF !important;
 }
 
@@ -101,7 +96,34 @@ ul{
     fill: #635FC7 !important;
 }
 
+/* Switch button background hover state */
+.switch{
+    background-color: #635fc7 !important;
+}
+
+.switch:hover{
+    background-color: #A8A4FF !important;
+}
+
 /* Show sidebar hover style */
 .show-sidebar path:first-child:hover{
     fill: #A8A4FF;
+}
+
+/* Board column task initial and hover states */
+.task-title{
+    font-weight: 700;
+    /* color: ; */
+}
+
+.hover-task:hover .task-title{
+    color: #635FC7 !important;
+}
+
+.new-col{
+    color: #828FA3 !important;
+}
+
+.new-col:hover{
+    color: #635FC7 !important;
 }
