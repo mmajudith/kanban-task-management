@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchBoards } from '../actions/boardsAction';
 
 type BoardsState = {
-    boards: [{name: string, column: []}]
+    boards: [{name: string, columns: []}]
     loading: 'idle' | 'pending' | 'fulfilled' | 'rejected'
 }
 

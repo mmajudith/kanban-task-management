@@ -8,11 +8,12 @@ export const utilContainerStyle: CSSProperties = {
     flexDirection: 'column', 
     justifyContent: 'center', 
     alignItems: 'center',
-    gap: 20,
-    padding: '0px 15px'
+    gap: 20
 };
 
 export const textStyle: CSSProperties = {
+    width: '90%',
+    margin: 'auto',
     color: '#828FA3', 
     fontSize: 18,
     textAlign: 'center'

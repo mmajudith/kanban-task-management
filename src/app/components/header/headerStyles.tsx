@@ -18,6 +18,7 @@ export const logoStyle: CSSProperties = {
     paddingLeft: 23,
     borderRightWidth: 1,
     borderRightStyle: 'solid',
+    borderBottomStyle: 'solid'
 };
 
 export const headerListCon: CSSProperties = {

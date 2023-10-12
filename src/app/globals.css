@@ -40,6 +40,9 @@ ul{
     width: 100%;
 }
 
+.auto{
+    margin: auto;
+}
 /* Navigation list active styles */
 .active{
     width: calc(100% - 23px);

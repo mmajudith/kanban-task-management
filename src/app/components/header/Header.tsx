@@ -3,12 +3,13 @@
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "@/redux/store/hook";
+import { useSiderWidth } from "@/hook/useSiderWidth";
 import NavList from "../../../shared-components/navList/NavList";
 import ThemeSwitcher from "../../../shared-components/ThemeSwitcher";
 import BoardTask from "../boardTask/BoardTask";
 import ArrowIcon from "../../../../public/assets/icon-arrow.svg";
 
-import { Layout, Image, Typography, Grid } from "antd";
+import { Layout, Image, Typography } from "antd";
 import { headerStyle, logoStyle, headerTitleStyle, 
      headerListCon, listThemeCon, navModalStyle 
 } from "./headerStyles";
@@ -20,13 +21,13 @@ const HeaderNav = () => {
     const removedSpecialChar = pathName.replace(/[/-]/g, ' ').trim()
 
     const [isOpen, setIsOpen] = useState(false);
-    const [boardColumn, setBoardColumn] = useState<{name: string}[]>();
-    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
+    const [boardColumn, setBoardColumn] = useState<[][]>();
+    const { currentTheme, isCollapse } = useAppSelector(state => state.themeSlice);
+    const { isDark } = currentTheme;
     const boardsData = useAppSelector(state => state.boardsSlice);
     const boardNames = boardsData.boards?.map((board: {name: string}) => board.name);
  
-    const { useBreakpoint } = Grid;
-    const { xl, md, sm } = useBreakpoint();
+    const [siderWidth , xl, md, sm] = useSiderWidth();  
     const logoWidth = xl ? 300 : md ? 280 : 50;
 
     const isOpenHandler = () => {
@@ -35,13 +36,13 @@ const HeaderNav = () => {
 
     useEffect(() => {
         if(boardsData.boards){
-            const column = boardsData.boards.filter((board: {name: string, column: []}, index) => {
+            const columns = boardsData.boards.filter((board: {name: string, columns: []}, index) => {
             if(pathName === '/'){
                 return index === 0
             }
                 return board.name === removedSpecialChar
-            });
-            setBoardColumn(column);
+            }).map(singleBoard => singleBoard.columns);
+            setBoardColumn(columns);
         }
         
     }, [boardsData.boards, pathName]);
@@ -53,7 +54,13 @@ const HeaderNav = () => {
         >
             {md ? (
                 <div 
-                    style={{...logoStyle, width: logoWidth, borderRightColor: !isDark ? '#E4EBFA' : '#3E3F4E'}} 
+                    style={{
+                        ...logoStyle, 
+                        width: logoWidth, 
+                        borderRightColor: !isDark ? '#E4EBFA' : '#3E3F4E',
+                        borderBottomColor: !isDark ? '#E4EBFA' : '#3E3F4E',
+                        borderBottomWidth: isCollapse ? 1 : 0,
+                    }} 
                     className="flex-row flex-start"
                 >
                     <Image preview={false} 

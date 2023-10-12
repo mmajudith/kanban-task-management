@@ -13,6 +13,7 @@ const layoutStyle: React.CSSProperties = {
     width: '100%',
     height: '100%',
     margin: 'auto',
+    position: 'relative'
 };
 
 const containerStyle: React.CSSProperties = {
@@ -20,7 +21,9 @@ const containerStyle: React.CSSProperties = {
     width: '100%',
     height: '100%',
     margin: 'auto',
-    position: 'relative'
+    position: 'absolute',
+    left: 0,
+    right: 0
 };
 
 

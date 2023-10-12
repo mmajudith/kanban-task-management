@@ -1,8 +1,8 @@
 import { CSSProperties } from "react";
 
 export const colContainer: CSSProperties = {
-    width: '100%', 
-    margin: '24px 24px 50px 0px',
+    width: 1250, 
+    height: '100%',
     paddingBottom: 50,
     paddingRight: 24,
 };

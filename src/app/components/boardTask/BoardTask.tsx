@@ -5,7 +5,7 @@ import AddIcon from '../../../../public/assets/icon-add-task-mobile.svg';
 import { addTaskStyle } from './boardTaskStyles';
 
 type AddTaskProps = {
-    boardColumn: { name: string; }[] | undefined,
+    boardColumn: [][] | undefined,
     md: Boolean | undefined,
     sm: Boolean | undefined
 }
@@ -13,6 +13,7 @@ type AddTaskProps = {
 const items: MenuProps['items'] = [{key: '1', label: 'Edit Board'}, {key: '2', label: 'Delete Board', danger: true}]
 
 const BoardTask = ({boardColumn, md, sm}: AddTaskProps) => {
+    
     return (
         <Space size={sm ? 20:10}>
             <Button 
@@ -34,7 +35,7 @@ const BoardTask = ({boardColumn, md, sm}: AddTaskProps) => {
                 menu={{items}} 
                 placement="bottomRight" 
                 trigger={["click"]} 
-                overlayStyle={{width: 192, top: 80}}
+                overlayStyle={{width: 192, position: 'fixed', top: 75}}
             >
                 <DotsIcon style={{cursor: 'pointer'}} className="flex-col center"/>
             </Dropdown>
