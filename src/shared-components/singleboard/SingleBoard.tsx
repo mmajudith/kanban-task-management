@@ -1,8 +1,9 @@
 "use client";
 
+import { Col, Typography, Row } from "antd";
 import { useAppSelector } from "@/redux/store/hook";
 import { useSiderWidth } from "@/hook/useSiderWidth";
-import { Col, Typography, Row } from "antd";
+import { BoardType, TasksType } from "@/types/types";
 import Utility from "../utility/Utility";
 import { colContainer, colName, colStatusStyle, 
     colTasksContainer, newColWraper, newColumn } from "./singleBoardStyles";
@@ -45,7 +46,7 @@ const SingleBoard = ({ board }: SBProps) => {
                 />
             )}
             {board && board?.status === 'success' && 
-                board?.message.map((item: {name: string, columns: []}, index) => (
+                board?.message.map((item: BoardType, index) => (
                     <div key={`${item.name}${index}`} className="w-100 auto">
                         {item.columns.length < 0 ? (
                             <Utility 
@@ -75,7 +76,7 @@ const SingleBoard = ({ board }: SBProps) => {
                                                     </Text>
                                                 </div>
 
-                                                {column.tasks.map((task: {subtasks: [{isCompleted: boolean}], status: string, description: string, title: string}, k: number) => (
+                                                {column.tasks.map((task: TasksType, k: number) => (
                                                     <div 
                                                         key={`${task.status}${k}`} 
                                                         style={{

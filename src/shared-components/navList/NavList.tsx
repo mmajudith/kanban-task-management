@@ -17,7 +17,7 @@ const NavList = ({isOpenHandler}: NLProps) => {
 
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
     const boards = useAppSelector(state => state.boardsSlice);
-    const boardNames = boards.boards?.map((board: {name: string}) => board.name);
+    const boardNames = boards.boards?.map((board) => board.name);
     const totalBoards = boardNames?.length
  
     return (

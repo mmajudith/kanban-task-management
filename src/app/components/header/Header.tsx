@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { Layout, Image, Typography } from "antd";
 import { useAppSelector } from "@/redux/store/hook";
 import { useSiderWidth } from "@/hook/useSiderWidth";
 import NavList from "../../../shared-components/navList/NavList";
@@ -9,7 +10,6 @@ import ThemeSwitcher from "../../../shared-components/ThemeSwitcher";
 import BoardTask from "../boardTask/BoardTask";
 import ArrowIcon from "../../../../public/assets/icon-arrow.svg";
 
-import { Layout, Image, Typography } from "antd";
 import { headerStyle, logoStyle, headerTitleStyle, 
      headerListCon, listThemeCon, navModalStyle 
 } from "./headerStyles";
@@ -25,7 +25,7 @@ const HeaderNav = () => {
     const { currentTheme, isCollapse } = useAppSelector(state => state.themeSlice);
     const { isDark } = currentTheme;
     const boardsData = useAppSelector(state => state.boardsSlice);
-    const boardNames = boardsData.boards?.map((board: {name: string}) => board.name);
+    const boardNames = boardsData.boards?.map((board) => board.name);
  
     const [siderWidth , xl, md, sm] = useSiderWidth();  
     const logoWidth = xl ? 300 : md ? 280 : 50;
@@ -36,7 +36,7 @@ const HeaderNav = () => {
 
     useEffect(() => {
         if(boardsData.boards){
-            const columns = boardsData.boards.filter((board: {name: string, columns: []}, index) => {
+            const columns = boardsData.boards.filter((board, index) => {
             if(pathName === '/'){
                 return index === 0
             }
