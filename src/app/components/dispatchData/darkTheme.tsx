@@ -13,6 +13,16 @@ export const darkTheme = {
         },
         Typography: {
             colorText: '#FFF'
-        }
+        },
+        Modal: {
+            titleColor: '#FFF',
+            titleFontSize: 18,
+            contentBg: '#2B2C37',
+            headerBg:' #2B2C37',
+        },
+        Form: {
+            labelColor: '#FFF',
+            itemMarginBottom: 24
+        },
     }
 }

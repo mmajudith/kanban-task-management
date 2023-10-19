@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/redux/store/hook";
+import BoardModal from "../boardModal/BoardModal";
 import BoardIcon from "../../../public/assets/icon-board.svg";
 
 import { List, Typography } from 'antd';
@@ -15,6 +17,7 @@ type NLProps = {
 const NavList = ({isOpenHandler}: NLProps) => {
     const pathName = usePathname();
 
+    const [ isBoardModal, setIsBoardModal ] = useState(false);
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
     const boards = useAppSelector(state => state.boardsSlice);
     const boardNames = boards.boards?.map((board) => board.name);
@@ -58,13 +61,26 @@ const NavList = ({isOpenHandler}: NLProps) => {
                     )
                 )}
                 
-                <div style={createBoardStyle} className="flex-row flex-start">
+                <div 
+                    style={createBoardStyle} 
+                    className="flex-row flex-start"
+                    onClick={() => {
+                        setIsBoardModal(!isBoardModal)
+                        // isOpenHandler()
+                    }}
+                >
                     <BoardIcon className='board-icon-purple'/>
                     <Typography.Text style={{paddingLeft: 15, color:'#635FC7'}}>
                         + Create New Board
                     </Typography.Text>
                 </div>
-            </div>         
+            </div>    
+            {isBoardModal && (
+                <BoardModal 
+                    isBoardModal={isBoardModal} 
+                    setIsBoardModal={() => setIsBoardModal(!isBoardModal)}
+                />
+            )}     
         </>
     )
 }

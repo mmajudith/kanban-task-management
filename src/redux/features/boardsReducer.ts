@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchBoards } from '../actions/boardsAction';
-
-type BoardsState = {
-    boards: [{name: string, columns: []}]
-    loading: 'idle' | 'pending' | 'fulfilled' | 'rejected'
-}
+import { BoardsState } from '@/types/types';
 
 export const boardsSlice = createSlice({
   name: 'boards',
@@ -24,6 +20,6 @@ export const boardsSlice = createSlice({
         state.boards = payload;
     });
   },
-})
+});
 
 export default boardsSlice.reducer

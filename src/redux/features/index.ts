@@ -1,8 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import boardsSlice from "./boardsReducer";
 import themeSlice  from "./utilitiesReducer";
+import boardsSlice from "./boardsReducer";
+import taskSlice from "./taskReducer";
 
 export default combineReducers({
     themeSlice,
-    boardsSlice
+    boardsSlice,
+    taskSlice
 })

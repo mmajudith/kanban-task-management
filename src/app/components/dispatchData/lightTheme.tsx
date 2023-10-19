@@ -13,6 +13,16 @@ export const lightTheme = {
         },
         Typography: {
             colorText: '#000112'
-        }
+        },
+        Modal: {
+            titleColor: '#000112',
+            titleFontSize: 18,
+            contentBg: '#FFF',
+            headerBg:' #FFF',
+        },
+        Form: {
+            labelColor: '#828FA3',
+            itemMarginBottom: 24
+        },
     }
 }

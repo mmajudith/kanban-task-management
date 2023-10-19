@@ -7,7 +7,7 @@ import { useAppSelector } from "@/redux/store/hook";
 import { useSiderWidth } from "@/hook/useSiderWidth";
 import NavList from "../../../shared-components/navList/NavList";
 import ThemeSwitcher from "../../../shared-components/ThemeSwitcher";
-import BoardTask from "../boardTask/BoardTask";
+import BoardTask from "../addEditDeleteBoardTask/AddEditDelBoardTask";
 import ArrowIcon from "../../../../public/assets/icon-arrow.svg";
 
 import { headerStyle, logoStyle, headerTitleStyle, 

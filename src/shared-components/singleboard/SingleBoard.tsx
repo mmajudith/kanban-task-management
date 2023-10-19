@@ -3,10 +3,11 @@
 import { Col, Typography, Row } from "antd";
 import { useAppSelector } from "@/redux/store/hook";
 import { useSiderWidth } from "@/hook/useSiderWidth";
-import { BoardType, TasksType } from "@/types/types";
+import { BoardType } from "@/types/types";
 import Utility from "../utility/Utility";
+import BoardTask from "../../app/components/boardTask/BoardTask";
 import { colContainer, colName, colStatusStyle, 
-    colTasksContainer, newColWraper, newColumn } from "./singleBoardStyles";
+    newColWraper, newColumn } from "./singleBoardStyles";
 
 type SBProps = {
     board: {
@@ -23,13 +24,6 @@ const SingleBoard = ({ board }: SBProps) => {
     const { isDark } = currentTheme;
 
     const [siderWidth] = useSiderWidth();  
-
-    //function that return the total number of subtasks complete
-    const subTasksCompleted = (subtasks: [{isCompleted: boolean}]) => {
-        const completed = subtasks.filter((subtask) => subtask.isCompleted === true);
-
-        return completed.length;
-    }
 
     return(
         <>
@@ -75,24 +69,8 @@ const SingleBoard = ({ board }: SBProps) => {
                                                         {column.name}{" "}({column.tasks.length})
                                                     </Text>
                                                 </div>
-
-                                                {column.tasks.map((task: TasksType, k: number) => (
-                                                    <div 
-                                                        key={`${task.status}${k}`} 
-                                                        style={{
-                                                            ...colTasksContainer,
-                                                            backgroundColor: `${ !isDark ? `#FFF`:`#2B2C37`}`,
-                                                        }}
-                                                        className="hover-task"
-                                                    >
-                                                        <Text className="task-title">
-                                                            {task.title}
-                                                        </Text>
-                                                        <Text style={{fontWeight: 600, fontSize: 13, color: '#828FA3'}}>
-                                                            {`${subTasksCompleted(task.subtasks)} of ${task.subtasks.length} subtasks`}
-                                                        </Text>
-                                                    </div>
-                                                ))}
+                                                
+                                                <BoardTask tasks={column.tasks}/>
                                             </Col>
                                         ))}
                                     </Row>

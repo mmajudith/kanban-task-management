@@ -43,6 +43,28 @@ ul{
 .auto{
     margin: auto;
 }
+
+.board-name::placeholder{
+    color: rgba(130, 143, 163, 0.25) !important
+}
+
+/*Board columns placeholder dark and light styles*/
+.board-cols-light{
+    cursor: default !important;
+}
+
+.board-cols-light::placeholder{
+    color: #000112 !important;
+}
+
+.board-cols-dark{
+    cursor: default !important;
+}
+
+.board-cols-dark::placeholder{
+    color: #FFF !important;
+}
+
 /* Navigation list active styles */
 .active{
     width: calc(100% - 23px);
