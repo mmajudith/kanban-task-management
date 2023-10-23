@@ -22,7 +22,7 @@ export const darkTheme = {
         },
         Form: {
             labelColor: '#FFF',
-            itemMarginBottom: 24
+            itemMarginBottom: 0
         },
     }
 }

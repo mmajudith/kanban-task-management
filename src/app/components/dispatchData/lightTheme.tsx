@@ -21,8 +21,8 @@ export const lightTheme = {
             headerBg:' #FFF',
         },
         Form: {
-            labelColor: '#828FA3',
-            itemMarginBottom: 24
+            labelColor: '#000112',
+            itemMarginBottom: 0
         },
     }
 }

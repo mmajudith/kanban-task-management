@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import { Modal, Form, Input, Button } from "antd";
+import { Modal, Form, Input, Button, Typography } from "antd";
 import { useAppSelector } from "@/redux/store/hook";
 import CloseIcon from '../../../public/assets/icon-cross.svg';
-import { btnStyles, colWrapper, inputStyles } from "./boardModalStyles";
+import { btnStyles, columnsIput, inputStyles } from "./boardModalStyles";
 
 type BMProps = {
     isBoardModal: boolean
@@ -12,83 +11,67 @@ type BMProps = {
 }
 
 const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
-    const [boardCol, setBoardCol] = useState<string[] | []>(['Todo', 'Doing', 'Done']);
+    const initialValue = {name: '', columns: [{ name: 'Todo' }, { name: 'Doing'}]}
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
 
-    //Function that removed a single board column
-    const removeBoardCol = (boardCol: string[] | [], index: number) => {
-        const filteredBoardCol = boardCol.filter((item, i) => i !== index);
-        setBoardCol(filteredBoardCol);
+    const onFinish = (values: any) => {
+        console.log('Success', values)
+        // const board = [{name: 'Roadmap', columns: [{ name: 'Now', tasks: [] }]}]
     }
-
-    //Function that add a single board column if it does exit
-    const addBoardCol = (boardCol: string[] | []) => {
-        const columns = ['Todo', 'Doing', 'Done'];
-
-        for(let i = 0; i <= columns.length; i++){
-            if(columns[i] !== boardCol[i]){
-                setBoardCol((prev) => [...prev, columns[i]]);
-                break;
-            }
-        }
-    }
-    
-    //Removed the last board columns element on mount
-    useEffect(() => {
-        const sliceBoardCol = boardCol.slice(0, -1);
-        setBoardCol(sliceBoardCol);
-    }, []);
 
     return (
         <Modal title={'Add New Board'} 
             open={isBoardModal} 
             onCancel={setIsBoardModal} 
-            closeIcon={null} footer={null} centered
-            maskClosable={true}
+            closeIcon={null} centered
+            maskClosable={true} footer={null}
+            style={{padding: '30px 0px'}}
         >
-            <Form layout="vertical" name="new-board" labelCol={{span: 24}} wrapperCol={{span: 24}} colon={false}>
-
-                <Form.Item label={'Board Name'}>
-                    <Input placeholder="eg Web Design" className="board-name" size="large" style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37'}}/>
+            <Form onFinish={onFinish}
+                initialValues={initialValue}
+                layout="vertical" 
+                name="new-board"
+                colon={false} autoComplete='off'
+            >
+                <Form.Item label={'Board Name'} name={'name'}>
+                    <Input placeholder="eg Web Design" 
+                        className="board-name" size="large" 
+                        style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37', marginBottom: 24}}
+                    />
                 </Form.Item>
 
-                <Form.Item label={'Board Columns'}> 
-                    <div
-                        className="flex-col center" 
-                        style={colWrapper}
-                    >
-                        {boardCol.length > 0 && boardCol.map((item, index) => (
-                            <div key={index} 
-                                className="flex-row between" 
-                                style={colWrapper}
+                <Typography.Text>BoardColumns</Typography.Text>
+                <Form.List name={'columns'}>
+                    {(fields, { add, remove}) => (
+                        <>
+                            {fields.map((field, index) => (
+                                <div key={field.key}
+                                    className="flex-row between" 
+                                    style={columnsIput}
+                                >
+                                    <Form.Item name={[field.name, 'name']} style={{width: '95%', margin: '0px 0px'}}>
+                                        <Input size="large" style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37'}}/>
+                                    </Form.Item>
+
+                                    <CloseIcon onClick={() => remove(field.name)} style={{cursor: 'pointer'}} />
+                                </div>
+                            ))}
+                            <Button 
+                                onClick={() => add()}
+                                type="primary" 
+                                style={{...btnStyles, backgroundColor: !isDark ? 'rgba(99, 95, 199, 0.10)' : '#FFF', color: '#635FC7'}}
                             >
-                                <Input placeholder={item} size="large" readOnly
-                                    className={`${!isDark ? `board-cols-light`:`board-cols-dark`}`}
-                                    style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37'}}
-                                />
-                                <CloseIcon
-                                    onClick={() => removeBoardCol(boardCol, index)} style={{cursor: 'pointer'}} 
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </Form.Item>
-
+                                + Add New Column
+                            </Button>
+                        </>
+                    )}
+                </Form.List>
+            
                 <Form.Item>
-                    <Button 
-                        disabled={boardCol.length === 3 ? true : false}
-                        onClick={() => addBoardCol(boardCol)}
-                        type="primary" 
-                        style={{...btnStyles, 
-                            cursor: boardCol.length === 3 ? 'default' : 'pointer',
-                            backgroundColor: !isDark ? 'rgba(99, 95, 199, 0.10)' : '#FFF', color: '#635FC7'
-                        }}
-                    >
-                        {boardCol.length === 3 ? 'Columns completed' : '+ Add New Column'}
+                    <Button htmlType="submit" type="primary" style={{...btnStyles, marginTop: 24}}>
+                        Create New Board
                     </Button>
-                    <Button type="primary" style={{...btnStyles, marginTop: 12}}>Create New Board</Button>
                 </Form.Item>
-
             </Form>
         </Modal>
     )
