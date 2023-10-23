@@ -3,7 +3,7 @@
 import { Modal, Form, Input, Button, Typography } from "antd";
 import { useAppSelector } from "@/redux/store/hook";
 import CloseIcon from '../../../public/assets/icon-cross.svg';
-import { btnStyles, columnsIput, inputStyles } from "./boardModalStyles";
+import { btnStyles, colItem, columnsIput, inputStyles } from "./boardModalStyles";
 
 type BMProps = {
     isBoardModal: boolean
@@ -15,8 +15,9 @@ const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
 
     const onFinish = (values: any) => {
-        console.log('Success', values)
-        // const board = [{name: 'Roadmap', columns: [{ name: 'Now', tasks: [] }]}]
+        console.log('Success', values);
+        const newBoard = {...values, columns: values.columns.map((col: {name: string}) => ({...col, tasks: []}))}
+        console.log(newBoard, 'board column');
     }
 
     return (
@@ -30,13 +31,16 @@ const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
             <Form onFinish={onFinish}
                 initialValues={initialValue}
                 layout="vertical" 
-                name="new-board"
+                name="new-board" requiredMark={false}
                 colon={false} autoComplete='off'
             >
-                <Form.Item label={'Board Name'} name={'name'}>
+                <Form.Item label={'Board Name'} name={'name'} 
+                    rules={[{pattern: /[a-z]/, message: 'BoardName must contain letters', required: true}]}  
+                    style={{marginBottom: 24}}
+                >
                     <Input placeholder="eg Web Design" 
                         className="board-name" size="large" 
-                        style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37', marginBottom: 24}}
+                        style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37'}}
                     />
                 </Form.Item>
 
@@ -49,8 +53,13 @@ const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
                                     className="flex-row between" 
                                     style={columnsIput}
                                 >
-                                    <Form.Item name={[field.name, 'name']} style={{width: '95%', margin: '0px 0px'}}>
-                                        <Input size="large" style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37'}}/>
+                                    <Form.Item name={[field.name, 'name']} 
+                                        style={colItem}
+                                        rules={[{pattern: /[a-z]/, message: 'Board columns must contain letters', required: true}]} 
+                                    >
+                                        <Input size="large" 
+                                            style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37'}}
+                                        />
                                     </Form.Item>
 
                                     <CloseIcon onClick={() => remove(field.name)} style={{cursor: 'pointer'}} />
