@@ -48,6 +48,11 @@ ul{
     color: rgba(130, 143, 163, 0.25) !important
 }
 
+.x-overflow{
+    height: 226px;
+    overflow-x: auto;
+}
+
 /* Navigation list active styles */
 .active{
     width: calc(100% - 23px);

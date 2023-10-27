@@ -19,7 +19,8 @@ export const linkStyle: CSSProperties = {
     height: 45, 
     paddingLeft: 23, 
     marginRight: 23,
-    fontWeight: 500
+    fontWeight: 500,
+    textTransform: 'capitalize'
 };
 
 export const listStyle: CSSProperties = {

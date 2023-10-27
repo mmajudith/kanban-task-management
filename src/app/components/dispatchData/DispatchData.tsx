@@ -1,6 +1,8 @@
 "use client";
  
 import React, { useEffect, useState } from 'react';
+import { onSnapshot, doc } from 'firebase/firestore';
+import { db } from '../../../firebase/firebaseConfig';
 import { useAppDispatch, useAppSelector } from '@/redux/store/hook';
 import { fetchBoards } from '@/redux/actions/boardsAction';
 import SpinnerLoader from '../SpinnerLoader';
@@ -32,13 +34,16 @@ const DispatchData = ({ children, }: { children: React.ReactNode }) => {
     const dispatch = useAppDispatch();
 
     const [ isClient, setIsClient ] = useState(false);
-    
+
     useEffect(() => {
-
-        dispatch(fetchBoards());
-        setIsClient(true)
-
-    }, [dispatch]);
+		const unsub = onSnapshot(doc(db, 'boards', 'data'), (doc) => {
+				// console.log(doc.data(), 'doc');
+				dispatch(fetchBoards());
+                setIsClient(true)
+			}
+		);
+		return () => unsub();
+	}, []);
 
     if(!isClient) return  <SpinnerLoader />
 

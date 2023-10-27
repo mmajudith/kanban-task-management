@@ -35,7 +35,7 @@ const NavList = ({isOpenHandler}: NLProps) => {
                 {boards.loading === 'fulfilled' && (
                     boardNames?.length > 0 ? (
                         <List 
-                            className="w-100"
+                            className="w-100 x-overflow"
                             itemLayout="vertical" 
                             dataSource={boardNames} 
                             renderItem={(name, index) => { 
@@ -65,8 +65,7 @@ const NavList = ({isOpenHandler}: NLProps) => {
                     style={createBoardStyle} 
                     className="flex-row flex-start"
                     onClick={() => {
-                        setIsBoardModal(!isBoardModal)
-                        // isOpenHandler()
+                        setIsBoardModal(!isBoardModal);
                     }}
                 >
                     <BoardIcon className='board-icon-purple'/>
