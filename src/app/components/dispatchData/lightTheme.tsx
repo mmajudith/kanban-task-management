@@ -11,6 +11,10 @@ export const lightTheme = {
             siderBg: '#FFFFFF',
             headerBg: '#FFFFFF'
         },
+        Button: {
+            defaultBg: 'rgba(99, 95, 199, 0.10)',
+            defaultColor: '#635FC7'
+        },
         Typography: {
             colorText: '#000112'
         },

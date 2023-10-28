@@ -53,6 +53,22 @@ ul{
     overflow-x: auto;
 }
 
+.del-title{
+    color: #EA5555 !important;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 24 !important;
+}
+
+.btn-del{
+    background-color: #EA5555 !important; 
+    color: #FFF !important
+}
+
+.btn-del:hover{
+    background: #FF9898 !important;
+}
+
 /* Navigation list active styles */
 .active{
     width: calc(100% - 23px);

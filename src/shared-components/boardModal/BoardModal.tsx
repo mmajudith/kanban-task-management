@@ -93,8 +93,7 @@ const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
                                 ))}
                                 <Button 
                                     onClick={() => add()}
-                                    type="primary" 
-                                    style={{...btnStyles, backgroundColor: !isDark ? 'rgba(99, 95, 199, 0.10)' : '#FFF', color: '#635FC7'}}
+                                    style={{...btnStyles}}
                                 >
                                     + Add New Column
                                 </Button>

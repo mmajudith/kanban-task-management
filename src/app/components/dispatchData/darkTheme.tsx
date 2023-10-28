@@ -11,6 +11,10 @@ export const darkTheme = {
             siderBg: '#2B2C37',
             headerBg: '#2B2C37',
         },
+        Button: {
+            defaultBg: '#FFF',
+            defaultColor: '#635FC7'
+        },
         Typography: {
             colorText: '#FFF'
         },
