@@ -30,6 +30,18 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
     return NextResponse.json({message: status});
 }
 
+export const DELETE = async (req: NextRequest, res: NextApiResponse) => {
+    if(req.method !== 'DELETE') return res.status(405).end();
+
+    const body = await req.json();
+    // const { status } = await updateData(body);
+    // if(status === 'network'){
+    //     return NextResponse.json({message: 'Network error!'});
+    // }    
+
+    // return NextResponse.json({message: status});
+}
+
 
 // export const UPDATE = async () => {
 

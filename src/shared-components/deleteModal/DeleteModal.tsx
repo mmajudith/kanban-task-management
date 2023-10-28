@@ -1,3 +1,5 @@
+import { usePathname } from "next/navigation";
+import { useBoardNames } from "@/hook/useBoardNames";
 import { Button, Modal, Typography } from "antd";
 import { btnCon, btnStyles, textStyles } from "./deleteStyles";
 
@@ -7,6 +9,14 @@ type DMProps = {
 }
 
 const DeleteModal = ({ isDelete, onClick}: DMProps) => {
+    const pathName = usePathname();
+    const boardName = pathName.replace(/[/-]/g, ' ').trim();
+    const { boardNames } = useBoardNames();
+
+    // const deleteBoard = async () => {
+
+    // }
+    
     return(
         <Modal title={<p className="del-title">Delete this board?</p>}
             open={isDelete}  
@@ -14,7 +24,7 @@ const DeleteModal = ({ isDelete, onClick}: DMProps) => {
             maskClosable={false} footer={null}
         >
             <Typography.Text style={textStyles}>
-                Are you sure you want to delete the ‘Platform Launch’ board? 
+                Are you sure you want to delete the '{boardNames?.length > 0 && (pathName === '/' ? boardNames[0] : boardName)}' board? 
                 This action will remove all columns and tasks and cannot be reversed.
             </Typography.Text>
             

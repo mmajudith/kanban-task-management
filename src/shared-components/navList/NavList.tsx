@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/redux/store/hook";
+import { useBoardNames } from "@/hook/useBoardNames";
 import BoardModal from "../boardModal/BoardModal";
 import BoardIcon from "../../../public/assets/icon-board.svg";
 
@@ -19,20 +20,19 @@ const NavList = ({isOpenHandler}: NLProps) => {
 
     const [ isBoardModal, setIsBoardModal ] = useState(false);
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
-    const boards = useAppSelector(state => state.boardsSlice);
-    const boardNames = boards.boards?.map((board) => board.name);
+    const {boardNames, loading} = useBoardNames();
     const totalBoards = boardNames?.length
  
     return (
         <>   
-            {boards.loading === 'pending' && (null)}
-            {boards.loading === 'rejected' && (null)}
+            {loading === 'pending' && (null)}
+            {loading === 'rejected' && (null)}
 
             <div style={listContainer}>
                 <Typography.Text style={listTitleStyle}>
                     All Boards ({totalBoards}) 
                 </Typography.Text>
-                {boards.loading === 'fulfilled' && (
+                {loading === 'fulfilled' && (
                     boardNames?.length > 0 ? (
                         <List 
                             className="w-100 x-overflow"

@@ -18,7 +18,7 @@ import { headerStyle, logoStyle, headerTitleStyle,
 
 const HeaderNav = () => {
     const pathName = usePathname();
-    const removedSpecialChar = pathName.replace(/[/-]/g, ' ').trim()
+    const removedSpecialChar = pathName.replace(/[/-]/g, ' ').trim();
 
     const [isOpen, setIsOpen] = useState(false);
     const [boardColumn, setBoardColumn] = useState<[][]>();
