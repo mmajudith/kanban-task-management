@@ -103,6 +103,7 @@ const HeaderNav = () => {
                 
                 <BoardTask
                     boardColumn={boardColumn} 
+                    boardNames={boardNames}
                     md={md}
                     sm={sm}
                 />

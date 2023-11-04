@@ -1,4 +1,8 @@
+"use client";
+
 import { Spin } from "antd";
+import { useAppSelector } from "@/redux/store/hook";
+import { useSiderWidth } from "@/hook/useSiderWidth";
 
 export const spinContainerStyle: React.CSSProperties = {
     width: '100%',
@@ -11,8 +15,14 @@ export const spinContainerStyle: React.CSSProperties = {
 };
 
 export function SpinLoader() {
+    const { isCollapse } = useAppSelector(state => state.themeSlice);
+    const [siderWidth ] = useSiderWidth();   
+
     return (
-        <div style={spinContainerStyle}>
+        <div style={{...spinContainerStyle,
+                padding: `0px 0px 0px ${isCollapse ? 0 : siderWidth}px`
+            }}
+        >
             <Spin size="large"/>
         </div>
     )

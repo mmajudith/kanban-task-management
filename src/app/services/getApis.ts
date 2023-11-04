@@ -16,9 +16,9 @@ export const getASingleBoard = async (boardName: string) => {
     try {
         const res = await fetch(`/api/${boardName}`, { cache: "no-cache" });
         const board = await res.json();
-        const { message , status } = board;
+        const { message } = board;
 
-        return ({message: JSON.parse(message), status});
+        return ({message: JSON.parse(message)});
 
     } catch (err) {
         console.log('err getting a single board');

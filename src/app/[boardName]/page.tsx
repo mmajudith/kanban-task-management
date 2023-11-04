@@ -2,15 +2,14 @@
 
 import { useBoard } from "@/hook/useBoard";
 import { Layout } from "antd";
-import SingleBoard from "../../shared-components/singleboard/SingleBoard";
+import SingleBoard from "../../shared-components/SingleBoard";
 
 export default function Board({params: {boardName}}: { params: { boardName: string}}) {
-
-  const [ board ] = useBoard(boardName);  
+  const board  = useBoard(boardName);  
 
   return (
-      <Layout.Content className="w-100 auto">
-        <SingleBoard board={ board }/>
-      </Layout.Content>
+    <Layout.Content className="w-100 auto">
+      <SingleBoard board={ board }/>
+    </Layout.Content>
   )
 }

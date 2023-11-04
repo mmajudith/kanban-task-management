@@ -8,7 +8,7 @@ export default async function GlobalError({error, reset} : {error: Error, reset:
     <html>
       	<body>
 		  	<Utility 
-				text={'Please check your internet connection :( .'} 
+				text={'Please check your internet connection root:( .'} 
 				buttonText={'Try again'}
 			/>
       	</body>

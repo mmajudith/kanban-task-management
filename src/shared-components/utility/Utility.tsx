@@ -1,3 +1,5 @@
+"use client";
+
 import { useAppSelector } from "@/redux/store/hook";
 import { useSiderWidth } from "@/hook/useSiderWidth";
 import { Button, Typography } from "antd";

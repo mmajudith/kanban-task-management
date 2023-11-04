@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Modal, Form, Input, Button, Typography, notification } from "antd";
 import { useAppSelector } from "@/redux/store/hook";
+import { updateBoards } from "@/app/services/updateApi";
 import CloseIcon from '../../../public/assets/icon-cross.svg';
 import { btnStyles, colItem, columnsIput, inputStyles } from "./boardModalStyles";
 
@@ -11,36 +12,22 @@ type BMProps = {
     setIsBoardModal: () => void
 }
 
-type NotificationType = 'success' | 'error';
-
 const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
     const [isCreatingBoard, setIsCreatingBoard] = useState(false);
     const [api, contextHolder] = notification.useNotification();
     const initialValue = {name: '', columns: [{ name: 'Todo' }, { name: 'Doing'}]}
     const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
 
-    const openNotification = (message: string, type: NotificationType) => {
-        api[type]({message, placement: 'top'});
-    }
-
     const onFinish = async (values: any) => {
         const newBoard = {...values, columns: values.columns.map((col: {name: string}) => ({...col, tasks: []}))}
         setIsCreatingBoard(true);
-        
-        const res = await fetch('/api', { 
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json',
-            },
-            cache: "no-cache",
-            body: JSON.stringify(newBoard), 
-        });
-        const { message } = await res.json();
+      
+        const { message } = await updateBoards('POST', newBoard);
         if(message === 'Network error!'){
             setIsCreatingBoard(false);
-            openNotification(message, 'error');
+            api['error']({message, placement: 'top'});
         }
-        openNotification(message, 'success');
+        api['success']({message: 'New board successfully created', placement: 'top'});
         setIsCreatingBoard(false);
     }
 

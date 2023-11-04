@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { getData } from "@/firebase/firestore/getData";
+import { getBoards } from "@/firebase/firestore/getBoards";
 
 //Fetching board based on name
 export const GET = async (req: Request, { params }: {params: {boardName: string}})  => {
         const { boardName } = params 
-        const { message, status } = await getData();
+        const { message, status } = await getBoards();
 
         if(status === 'empty'){
             return  NextResponse.json({message, status })

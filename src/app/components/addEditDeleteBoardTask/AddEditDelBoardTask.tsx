@@ -1,50 +1,48 @@
-import { useState } from 'react';
 import { Space, Button, Dropdown} from 'antd';
 import type { MenuProps } from "antd";
-import DeleteModal from '@/shared-components/deleteModal/DeleteModal';
+import { useAppDispatch } from '@/redux/store/hook';
+import { deleteBoard, editBoard } from '@/redux/features/utilitiesReducer';
 import DotsIcon from '../../../../public/assets/icon-dots.svg';
 import AddIcon from '../../../../public/assets/icon-add-task-mobile.svg';
 import { addTaskStyle } from './addEditDelStyles';
 
 type AddTaskProps = {
     boardColumn: [][] | undefined,
+    boardNames: string[],
     md: Boolean | undefined,
     sm: Boolean | undefined
 }
 
-
-const  AddEditDelBoardTask = ({boardColumn, md, sm}: AddTaskProps) => {
-    const [ isDelete, setIsDelete ] = useState(false);
+const  AddEditDelBoardTask = ({boardColumn, boardNames, md, sm}: AddTaskProps) => {
+    const dispatch = useAppDispatch();
     const items: MenuProps['items'] = [
         {key: '1', label: 'Edit Board'}, 
         {key: '2', label: 'Delete Board', danger: true}
     ];
+    
     const onClick: MenuProps['onClick'] = ({key}) => {
-        if(key === '2') setIsDelete(!isDelete);
+        if(key === '1') dispatch(editBoard());
+        if(key === '2') dispatch(deleteBoard());
     }
     
     return (
-        <>
-            {isDelete && (
-                <DeleteModal isDelete={isDelete} onClick={() => setIsDelete(!isDelete)}/>
-            )}
-
-            <Space size={sm ? 20:10}>
-                <Button 
-                    type="primary" 
-                    disabled={boardColumn?.length ? false : true}
-                    style={{
-                        ...addTaskStyle,  
-                        width: md? 164:45, 
-                        height:md? 48:32, 
-                        backgroundColor: boardColumn?.length ? '#635FC7' : '#d8d7f1',
-                        cursor: boardColumn?.length ? 'pointer' : 'auto',
-                    }}
-                    className={`${boardColumn?.length && `btn-hover`} flex-row center`}
-                >
-                    {md ? ('+ Add New Task') : ( <AddIcon />)}
-                </Button>
-                    
+        <Space size={sm ? 20:10}>
+            <Button 
+                type="primary" 
+                disabled={boardColumn?.length ? false : true}
+                style={{
+                    ...addTaskStyle,  
+                    width: md? 164:45, 
+                    height:md? 48:32, 
+                    backgroundColor: boardColumn?.length ? '#635FC7' : '#d8d7f1',
+                    cursor: boardColumn?.length ? 'pointer' : 'auto',
+                }}
+                className={`${boardColumn?.length && `btn-hover`} flex-row center`}
+            >
+                {md ? ('+ Add New Task') : ( <AddIcon />)}
+            </Button>
+                
+            {boardNames?.length > 0 && (
                 <Dropdown 
                     menu={{items, onClick}} 
                     placement="bottomRight" 
@@ -53,8 +51,8 @@ const  AddEditDelBoardTask = ({boardColumn, md, sm}: AddTaskProps) => {
                 >
                     <DotsIcon style={{cursor: 'pointer'}} className="flex-col center"/>
                 </Dropdown>
-            </Space>
-        </>
+            )}
+        </Space>
     )
 }
 

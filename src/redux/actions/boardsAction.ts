@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getBoards } from '@/app/services/apis';
+import { getBoards } from '@/app/services/getApis';
 
 //Fetch boards action creator
 export const fetchBoards = createAsyncThunk(
-    'boards/fetchBoards',
+    'fetchBoards',
     async () => {
       try{
         const data = await getBoards();

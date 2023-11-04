@@ -1,7 +1,7 @@
 import { db } from '../firebaseConfig';
 import { getDoc, doc } from 'firebase/firestore';
 
-export const getData = async () => {
+export const getBoards = async () => {
     try{
         const boardsRef = doc(db, 'boards', 'data');
         const boardsSnap = await getDoc(boardsRef);

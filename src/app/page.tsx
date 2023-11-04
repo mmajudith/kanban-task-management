@@ -1,14 +1,21 @@
 "use client";
 
-import { useBoard } from '@/hook/useBoard';
-import { useBoardNames } from '@/hook/useBoardNames';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '@/redux/store/hook';
 import { Layout } from 'antd';
-import SingleBoard from '../shared-components/singleboard/SingleBoard';
+import SingleBoard from '../shared-components/SingleBoard';
 
 export default function Home() {
-  const {boardNames} = useBoardNames();
-  const [ board ] = useBoard(boardNames && boardNames.length > 0 ? boardNames[0] : undefined);
-
+  const [ board, setBoard ] = useState<{ name: string; columns: []; }[]>([]);
+  const { boards } = useAppSelector(state => state.boardsSlice);
+  
+  useEffect(() => {
+    if(boards){
+      const board = boards?.filter((item, index) => index === 0);
+      setBoard(board);
+    }
+  }, [boards]);
+     
   return (
     <Layout.Content className="w-100 auto">
       <SingleBoard board={ board }/>
