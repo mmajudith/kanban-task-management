@@ -15,7 +15,7 @@ type BMProps = {
 const BoardForm = ({isBoardForm, setIsBoardForm}: BMProps) => {
     const [isCreatingBoard, setIsCreatingBoard] = useState(false);
     const initialValue = {name: '', columns: [{ name: 'Todo' }, { name: 'Doing'}]}
-    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
+    const { isDark } = useAppSelector(state => state.modalSlice.currentTheme);
 
     const onFinish = async (values: any) => {
         const newBoard = {...values, columns: values.columns.map((col: {name: string}) => ({...col, tasks: []}))}
