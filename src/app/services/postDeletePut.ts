@@ -1,7 +1,7 @@
 import { BoardType } from "@/types/types";
 
 //Function that post, delete, and put board
-export const updateBoards = async (method: string, board: BoardType) => {
+export const postDeletePut = async (method: string, board: BoardType) => {
     const res = await fetch('/api', { 
         method,
         headers:{

@@ -1,57 +1,80 @@
 'use client';
 
 import { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { postDeletePut } from "@/app/services/postDeletePut";
 import { Modal, Form, Input, Button, Typography, notification } from "antd";
-import { useAppSelector } from "@/redux/store/hook";
-import { updateBoards } from "@/app/services/updateApi";
+import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
+import { editBoard, savedBoard } from "@/redux/features/utilitiesReducer";
 import CloseIcon from '../../../public/assets/icon-cross.svg';
-import { btnStyles, colItem, columnsIput, inputStyles } from "./boardModalStyles";
+import { btnStyles, colItem, columnsIput, inputStyles } from "../createNewBoardModal/boardModalStyles";
 
-type BMProps = {
-    isBoardModal: boolean
-    setIsBoardModal: () => void
+type EBMProps = {
+    board: {
+        id: string,
+        name: string, 
+        columns: [] 
+    }[]
 }
 
-const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
-    const [isCreatingBoard, setIsCreatingBoard] = useState(false);
+const EditBoardModal = ({ board }: EBMProps) => {
+    const router = useRouter();
+    const pathName = usePathname();
+    const [isSavingBoard, setIsSavingBoard] = useState(false);
     const [api, contextHolder] = notification.useNotification();
-    const initialValue = {name: '', columns: [{ name: 'Todo' }, { name: 'Doing'}]}
-    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
+    const initialValues =  {name: board[0]?.name, columns: board[0]?.columns.map((column) => column)};
+    
+    const dispatch = useAppDispatch();
+    const { currentTheme, isEdit } = useAppSelector(state => state.modalSlice);
+    const { isDark } = currentTheme;
 
     const onFinish = async (values: any) => {
-        const newBoard = {...values, columns: values.columns.map((col: {name: string}) => ({...col, tasks: []}))}
-        setIsCreatingBoard(true);
-      
-        const { message } = await updateBoards('POST', newBoard);
+        const editedBoard = { ...values, id: board[0]?.id, columns: values.columns.map((column: {name: string, tasks: []}) =>{
+                return !column.tasks ? ({...column, tasks: []}) : column
+            })}
+
+        const replaceSpace = editedBoard.name.replaceAll(' ', '-');
+        setIsSavingBoard(true);
+        
+        const { message } = await postDeletePut('PUT', editedBoard);
         if(message === 'Network error!'){
-            setIsCreatingBoard(false);
+            setIsSavingBoard(false);
             api['error']({message, placement: 'top'});
         }
-        api['success']({message: 'New board successfully created', placement: 'top'});
-        setIsCreatingBoard(false);
+        api['success']({message: 'Changes successfully made.', placement: 'top'});
+        setIsSavingBoard(false);
+
+        window.setTimeout(() => {
+            dispatch(editBoard());
+            if(pathName === `/`){
+                return router.push(`/`);
+            }
+            dispatch(savedBoard())
+            router.push(`/${replaceSpace}`);
+        }, 3000);
     }
 
     return (
         <>
             {contextHolder}
-            <Modal title={'Add New Board'} 
-                open={isBoardModal} 
-                onCancel={setIsBoardModal} 
+            <Modal title={'Edit Board'} 
+                open={isEdit} 
+                onCancel={() => dispatch(editBoard())} 
                 closeIcon={null} centered
                 maskClosable={true} footer={null}
                 style={{padding: '30px 0px'}}
             >
                 <Form onFinish={onFinish}
-                    initialValues={initialValue}
+                    initialValues={initialValues}
                     layout="vertical" preserve={false}
-                    name="new-board" requiredMark={false}
+                    name="edit-board" requiredMark={false}
                     colon={false} autoComplete='off'
                 >
-                    <Form.Item label={'Board Name'} name={'name'} 
+                    <Form.Item label={'Board Name'} name={'name'}
                         rules={[{pattern: /[a-z]/, message: 'BoardName must contain letters', required: true}]}  
                         style={{marginBottom: 24}}
                     >
-                        <Input placeholder="eg Web Design" 
+                        <Input 
                             className="board-name" size="large" 
                             style={{...inputStyles, backgroundColor: !isDark ? '#FFF' : '#2B2C37'}}
                         />
@@ -91,10 +114,10 @@ const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
                     <Form.Item>
                         <Button htmlType="submit" type="primary" style={{
                                 ...btnStyles, marginTop: 24,
-                                cursor: isCreatingBoard ? 'wait' : 'pointer'
+                                cursor: isSavingBoard ? 'wait' : 'pointer'
                             }}
                         >
-                            {isCreatingBoard ? 'Creating new board' : 'Create New Board'}
+                            {isSavingBoard ? 'Saving Changes' : 'Save Changes'}
                         </Button>
                     </Form.Item>
                 </Form>
@@ -103,4 +126,4 @@ const BoardModal = ({isBoardModal, setIsBoardModal}: BMProps) => {
     )
 }
 
-export default  BoardModal;
+export default  EditBoardModal;

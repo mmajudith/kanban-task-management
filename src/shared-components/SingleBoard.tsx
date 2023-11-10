@@ -1,15 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { notification } from "antd";
-import { updateBoards } from "@/app/services/updateApi";
+import { postDeletePut } from "@/app/services/postDeletePut";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { deleteBoard } from "@/redux/features/utilitiesReducer";
+import { deleteBoard, deletedBoard } from "@/redux/features/utilitiesReducer";
 import Board from "./board/Board";
+import EditBoardModal from "./editBoardModal/EditBoardModal";
 import DeleteModal from "@/shared-components/deleteModal/DeleteModal";
 
 type SBProps = {
     board: {
+        id: string
         name: string, 
         columns: [] 
     }[] 
@@ -18,25 +21,36 @@ type SBProps = {
 const SingleBoard = ({ board }: SBProps) => {
     const router = useRouter();
     const [api, contextHolder] = notification.useNotification();
+    const [isDeleting, setIsDeleting] = useState(false);
     const dispatch = useAppDispatch();
-    const { isDelete, isEdit } = useAppSelector(state => state.themeSlice);
+    const { isDelete, isEdit } = useAppSelector(state => state.modalSlice);
     
     //Function that delete a board with its children
     const handleDeleteBoard = async () => {
         const eachBoard = board[0]
-        const { message } = await updateBoards('DELETE', eachBoard)
+        setIsDeleting(true);
+        const { message } = await postDeletePut('DELETE', eachBoard)
         if(message === 'Network error!'){
+            setIsDeleting(false);
             api['error']({message, placement: 'top'});
         }
         api['success']({message: `${board[0]?.name} Board successfully deleted`, placement: 'top'});
+        setIsDeleting(false);
     
-        window.setTimeout(() => {dispatch(deleteBoard()); router.push('/')}, 3000);
+        window.setTimeout(() => {
+            dispatch(deleteBoard());
+            dispatch(deletedBoard()); 
+            router.push('/');
+        }, 3000);
     }
 
     return (
         <>
+            {isEdit && (<EditBoardModal board={board} />)}
             {isDelete && (
-                <DeleteModal isDelete={isDelete} 
+                <DeleteModal
+                    isDeleting={isDeleting} 
+                    isDelete={isDelete} 
                     onClick={() => dispatch(deleteBoard())}
                     contextHolder={contextHolder}
                     name={board[0]?.name}

@@ -6,22 +6,34 @@ import { toggleTheme } from '../actions/themeAction';
 const initialState = {
     currentTheme: JSON.parse(typeof window !== "undefined" && window.localStorage.getItem('theme') || '{}') || null,
     isCollapse: false,
+    isBoardModal: false,
     isDelete: false,
-    isEdit: false
+    isEdit: false,
+    isSavedBoard: false,
+    isDeleted: false
 }
 
-export const themeSlice = createSlice({
-  name: 'theme',
+export const modalSlice = createSlice({
+  name: 'modal',
   initialState,
   reducers: {
     collapse: (state) => {
       state.isCollapse = !state.isCollapse;
+    },
+    boardModal: (state) => {
+      state.isBoardModal = !state.isBoardModal;
     },
     deleteBoard: (state) => {
       state.isDelete = !state.isDelete;
     },
     editBoard: (state) => {
       state.isEdit = !state.isEdit;
+    },
+    savedBoard: (state) => {
+      state.isSavedBoard = !state.isSavedBoard;
+    },
+    deletedBoard: (state) => {
+      state.isDeleted = !state.isDeleted;
     },
   },
   extraReducers: (builder) => {
@@ -31,6 +43,8 @@ export const themeSlice = createSlice({
   },
 });
 
-export const { collapse, deleteBoard, editBoard } = themeSlice.actions
+export const { collapse, boardModal, 
+  deleteBoard, editBoard, 
+  deletedBoard, savedBoard } = modalSlice.actions
 
-export default themeSlice.reducer
+export default modalSlice.reducer

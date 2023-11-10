@@ -3,7 +3,7 @@ import { getBoards } from '@/app/services/getApis';
 
 //Fetch boards action creator
 export const fetchBoards = createAsyncThunk(
-    'fetchBoards',
+    'boards/fetchBoards',
     async () => {
       try{
         const data = await getBoards();

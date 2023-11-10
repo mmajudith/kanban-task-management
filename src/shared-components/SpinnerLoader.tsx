@@ -15,7 +15,7 @@ export const spinContainerStyle: React.CSSProperties = {
 };
 
 export function SpinLoader() {
-    const { isCollapse } = useAppSelector(state => state.themeSlice);
+    const { isCollapse } = useAppSelector(state => state.modalSlice);
     const [siderWidth ] = useSiderWidth();   
 
     return (

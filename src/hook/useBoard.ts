@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useAppSelector } from "@/redux/store/hook";
 import { getASingleBoard } from "@/app/services/getApis";
 
 
 export const useBoard = (boardName: string) => {
     const [ board, setBoard ] = useState({ message: []});
+    const { isSavedBoard } = useAppSelector(state => state.modalSlice)
 
     useEffect(() => {
         const getBoard = async () =>{
@@ -14,7 +16,7 @@ export const useBoard = (boardName: string) => {
         }
 
         getBoard();
-    }, [boardName]);
+    }, [boardName, isSavedBoard]);
 
     return board?.message
 }

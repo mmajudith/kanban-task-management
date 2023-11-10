@@ -1,16 +1,17 @@
 "use client";
 
 import { Col, Typography, Row } from "antd";
-import { useAppSelector } from "@/redux/store/hook";
+import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
+import { boardModal } from "@/redux/features/utilitiesReducer";
 import { useSiderWidth } from "@/hook/useSiderWidth";
 import Utility from "../utility/Utility";
 import BoardTask from "../../app/components/boardTask/BoardTask";
-import SpinnerLoader from '../SpinnerLoader';
 import { colContainer, colName, colStatusStyle, 
     newColWraper, newColumn } from "./boardStyles";
 
 type BProps = {
     board: {
+        id: string
         name: string, 
         columns: [] 
     }[]
@@ -20,32 +21,26 @@ const { Text } = Typography;
 
 const Board = ({ board }: BProps) => {
     console.log(board, 'single');
-    const { loading } = useAppSelector(state => state.boardsSlice);
-    const { currentTheme, isCollapse } = useAppSelector(state => state.themeSlice);
+    const { currentTheme, isCollapse } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
+    const { boards } = useAppSelector(state => state.boardsSlice);
+    const dispatch = useAppDispatch();
     
     const [siderWidth] = useSiderWidth();  
 
     return(
         <>
-            {loading === 'pending' && (<SpinnerLoader />)}
-
-            {loading === 'rejected' && (
-                <Utility 
-                    text={'Please check your internet connection :( .'} 
-                    buttonText={'Try again'}
-                />
-            )} 
-            {loading === 'fulfilled' && !board.length && (
+            {Array.isArray(boards) && !boards.length && (
                 <Utility 
                     text={'Empty document. Create a new board to get started.'} 
                     buttonText={'+ Create New Board'}
+                    onClick={() => dispatch(boardModal())}
                 />
             )}
-            {loading === 'fulfilled' && board.length &&
+            {board.length &&
                 board.map((item, index) => ( 
                     <div key={`${item.name}${index}`} className="w-100 auto">
-                        {item.columns.length < 0 ? (
+                        {!item.columns.length ? (
                                 <Utility 
                                     text={'This board is empty. Create a new column to get started.'} 
                                     buttonText={'+ Add New Column'}

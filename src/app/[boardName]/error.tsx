@@ -8,6 +8,7 @@ export default function Error({error, reset} : {error: Error, reset: () => void}
 		<Utility 
 			text={'Please check your internet connection :( .'} 
 			buttonText={'Try again'}
+			onClick={reset}
         />
 	)
 };

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useAppSelector } from "@/redux/store/hook";
+import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
+import { boardModal } from "@/redux/features/utilitiesReducer";
 import { useBoardNames } from "@/hook/useBoardNames";
-import BoardModal from "../boardModal/BoardModal";
+import CreateNewBoardModal from "../createNewBoardModal/CreateNewBoardModal";
 import BoardIcon from "../../../public/assets/icon-board.svg";
 
 import { List, Typography } from 'antd';
@@ -18,8 +18,9 @@ type NLProps = {
 const NavList = ({isOpenHandler}: NLProps) => {
     const pathName = usePathname();
 
-    const [ isBoardModal, setIsBoardModal ] = useState(false);
-    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
+    const dispatch = useAppDispatch();
+    const { currentTheme, isBoardModal } = useAppSelector(state => state.modalSlice);
+    const { isDark } = currentTheme;
     const {boardNames, loading} = useBoardNames();
     const totalBoards = boardNames?.length
  
@@ -65,7 +66,7 @@ const NavList = ({isOpenHandler}: NLProps) => {
                     style={createBoardStyle} 
                     className="flex-row flex-start"
                     onClick={() => {
-                        setIsBoardModal(!isBoardModal);
+                        dispatch(boardModal());
                     }}
                 >
                     <BoardIcon className='board-icon-purple'/>
@@ -74,12 +75,7 @@ const NavList = ({isOpenHandler}: NLProps) => {
                     </Typography.Text>
                 </div>
             </div>    
-            {isBoardModal && (
-                <BoardModal 
-                    isBoardModal={isBoardModal} 
-                    setIsBoardModal={() => setIsBoardModal(!isBoardModal)}
-                />
-            )}     
+            {isBoardModal && ( <CreateNewBoardModal />)}     
         </>
     )
 }

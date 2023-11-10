@@ -22,7 +22,7 @@ const HeaderNav = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [boardColumn, setBoardColumn] = useState<[][]>();
-    const { currentTheme, isCollapse } = useAppSelector(state => state.themeSlice);
+    const { currentTheme, isCollapse } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
     const boardsData = useAppSelector(state => state.boardsSlice);
     const boardNames = boardsData.boards?.map((board) => board.name);

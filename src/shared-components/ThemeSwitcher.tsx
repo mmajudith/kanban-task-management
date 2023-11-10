@@ -14,7 +14,7 @@ const switchContainerStyle: React.CSSProperties = {
 };
 
 const ThemeSwitcher = () => {
-    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
+    const { isDark } = useAppSelector(state => state.modalSlice.currentTheme);
     const dispatch = useAppDispatch();
 
     return(

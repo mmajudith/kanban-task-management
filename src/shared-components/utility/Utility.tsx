@@ -8,10 +8,11 @@ import { btnStyle, textStyle, utilContainerStyle } from "./utilityStyles";
 type NProps = {
     text: string;
     buttonText?: string
+    onClick?: () => void
 }
 
-const Utility = ({text, buttonText}: NProps) => {
-    const { isCollapse } = useAppSelector(state => state.themeSlice);
+const Utility = ({text, buttonText, onClick}: NProps) => {
+    const { isCollapse } = useAppSelector(state => state.modalSlice);
     const [siderWidth ] = useSiderWidth();   
 
     return (
@@ -21,7 +22,9 @@ const Utility = ({text, buttonText}: NProps) => {
             }}
         >
             <Typography.Text style={textStyle}>{text}</Typography.Text>
-            <Button type="primary" style={btnStyle}>{buttonText}</Button>
+            <Button type="primary" style={btnStyle} onClick={onClick}>
+                {buttonText}
+            </Button>
         </div>
     )
 }

@@ -14,7 +14,7 @@ type BTProps = {
 const { Text } = Typography;
 
 const BoardTask = ({ tasks }: BTProps) => {
-    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
+    const { isDark } = useAppSelector(state => state.modalSlice.currentTheme);
     const dispatch = useAppDispatch();
 
     //function that return the total number of subtasks complete

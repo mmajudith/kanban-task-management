@@ -1,4 +1,4 @@
-import { Space, Button, Dropdown} from 'antd';
+import { Space, Button, Dropdown, Image} from 'antd';
 import type { MenuProps } from "antd";
 import { useAppDispatch } from '@/redux/store/hook';
 import { deleteBoard, editBoard } from '@/redux/features/utilitiesReducer';
@@ -49,7 +49,7 @@ const  AddEditDelBoardTask = ({boardColumn, boardNames, md, sm}: AddTaskProps) =
                     trigger={["click"]} 
                     overlayStyle={{width: 192, position: 'fixed', top: 75}}
                 >
-                    <DotsIcon style={{cursor: 'pointer'}} className="flex-col center"/>
+                    <img src='/assets/icon-dots.svg' alt='dotted icon' className="flex-col center" style={{cursor: 'pointer'}}/>
                 </Dropdown>
             )}
         </Space>

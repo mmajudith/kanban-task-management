@@ -2,7 +2,7 @@ import { db } from '../firebaseConfig';
 import { doc, updateDoc } from 'firebase/firestore';
 import { BoardType } from '@/types/types';
 
-export const updateBoards = async (board: BoardType, arrMethod: (arg: {}) => void) => {
+export const postDeleteBoard = async (board: BoardType, arrMethod: (arg: {}) => void) => {
     try{
         const boardsRef = doc(db, 'boards', 'data');
         await updateDoc(boardsRef, { boards: arrMethod({...board}) });

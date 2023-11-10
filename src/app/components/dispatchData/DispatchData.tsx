@@ -30,7 +30,7 @@ const containerStyle: React.CSSProperties = {
 
 
 const DispatchData = ({ children, }: { children: React.ReactNode }) => {
-    const { isDark } = useAppSelector(state => state.themeSlice.currentTheme);
+    const { isDark } = useAppSelector(state => state.modalSlice.currentTheme);
     const dispatch = useAppDispatch();
 
     const [ isClient, setIsClient ] = useState(false);

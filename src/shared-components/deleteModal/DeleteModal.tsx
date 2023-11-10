@@ -4,6 +4,7 @@ import { Button, Modal, Typography } from "antd";
 import { btnCon, btnStyles, textStyles } from "./deleteStyles";
 
 type DMProps = {
+    isDeleting: boolean
     isDelete: boolean
     contextHolder:  unknown
     name: string
@@ -11,7 +12,7 @@ type DMProps = {
     onDelete: () => void
 }
 
-const DeleteModal = ({ isDelete, contextHolder, name, onClick, onDelete}: DMProps) => {
+const DeleteModal = ({ isDeleting, isDelete, contextHolder, name, onClick, onDelete}: DMProps) => {
     
     return(
         <>
@@ -29,12 +30,16 @@ const DeleteModal = ({ isDelete, contextHolder, name, onClick, onDelete}: DMProp
                 <div className="flex-row between" style={btnCon}>
                     <Button type="primary"
                         onClick={onDelete} 
-                        style={btnStyles} 
+                        style={{...btnStyles, cursor: isDeleting ? 'wait' : 'pointer'}} 
                         className="btn-del"
                     >
-                        Delete
+                        {isDeleting ? 'Deleting' : 'Delete'}
                     </Button>
-                    <Button onClick={onClick} style={btnStyles}>
+                    <Button 
+                        onClick={onClick} 
+                        style={{...btnStyles, cursor: isDeleting ? 'default' : 'pointer'}}
+                        disabled={isDeleting}
+                    >
                         Cancel
                     </Button>
                 </div>

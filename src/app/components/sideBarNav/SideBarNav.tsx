@@ -13,7 +13,7 @@ import { siderStyle, siderContainerStyle, hideSiderContainer, showSider} from '.
 
 const SiderBarNav = () => {
     const dispatch = useAppDispatch();
-    const { currentTheme, isCollapse } = useAppSelector(state => state.themeSlice);
+    const { currentTheme, isCollapse } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
 
     const [siderWidth , xl, md, sm] = useSiderWidth();  
