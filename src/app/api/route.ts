@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse  } from "next/server";
-import { NextApiResponse } from "next";
 import { arrayRemove, arrayUnion } from "firebase/firestore";
 import { getBoards } from "@/firebase/firestore/getBoards";
 import { postDeleteBoard } from "@/firebase/firestore/postDeleteBoard";
@@ -21,9 +20,7 @@ export const GET = async () => {
 }
 
 //Post a new board 
-export const POST = async (req: NextRequest, res: NextApiResponse) => {
-    if(req.method !== 'POST') return res.status(405).end();
-
+export const POST = async (req: NextRequest) => {
     const body = await req.json();
     const { status } = await postDeleteBoard(body, arrayUnion);
     if(status === 'network'){
@@ -34,9 +31,7 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
 }
 
 //Delete a board 
-export const DELETE = async (req: NextRequest, res: NextApiResponse) => {
-    if(req.method !== 'DELETE') return res.status(405).end();
-
+export const DELETE = async (req: NextRequest, res: NextResponse) => {
     const body = await req.json();
     const { status } = await postDeleteBoard(body, arrayRemove);
     if(status === 'network'){
@@ -47,9 +42,7 @@ export const DELETE = async (req: NextRequest, res: NextApiResponse) => {
 }
 
 //Update a board 
-export const PUT = async (req: NextRequest, res: NextApiResponse) => {
-    if(req.method !== 'PUT') return res.status(405).end();
-
+export const PUT = async (req: NextRequest, res: NextResponse) => {
     const body = await req.json();
     const status = await updateBoard(body);
     if(status === 'network'){
