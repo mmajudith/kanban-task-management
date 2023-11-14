@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getBoards } from '@/app/services/getApis';
+import { getBoards } from '@/app/clientApi/get';
 
 //Fetch boards action creator
 export const fetchBoards = createAsyncThunk(

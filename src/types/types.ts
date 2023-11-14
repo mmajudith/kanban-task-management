@@ -1,9 +1,3 @@
-export type BoardType = {
-    id: string
-    name: string, 
-    columns: []
-}
-
 export type TasksType = {
     description: string
     status: string
@@ -16,13 +10,21 @@ export type TasksType = {
     isTask: boolean
 }
 
+export type BoardType = {
+    id: string
+    name: string, 
+    columns: {
+        name: string,
+        tasks: TasksType[]
+    }[]
+}
+ 
 export type BoardsState = {
-    boards: [
-        {
-            id: string,
-            name: string, 
-            columns: []
-        }
-    ] 
+    boards: BoardType[]
+    loading: 'idle' | 'pending' | 'fulfilled' | 'rejected',
+}
+
+export type BoardState = {
+    board: BoardType[]
     loading: 'idle' | 'pending' | 'fulfilled' | 'rejected',
 }

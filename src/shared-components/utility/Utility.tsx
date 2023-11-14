@@ -8,7 +8,7 @@ import { btnStyle, textStyle, utilContainerStyle } from "./utilityStyles";
 type NProps = {
     text: string;
     buttonText?: string
-    onClick?: () => void
+    onClick: () => void
 }
 
 const Utility = ({text, buttonText, onClick}: NProps) => {

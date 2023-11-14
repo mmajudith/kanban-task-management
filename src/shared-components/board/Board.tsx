@@ -2,31 +2,29 @@
 
 import { Col, Typography, Row } from "antd";
 import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
-import { boardModal } from "@/redux/features/utilitiesReducer";
+import { boardModal, editBoard } from "@/redux/features/utilitiesReducer";
 import { useSiderWidth } from "@/hook/useSiderWidth";
 import Utility from "../utility/Utility";
-import BoardTask from "../../app/components/boardTask/BoardTask";
+import BoardTask from "../boardTask/BoardTask";
 import { colContainer, colName, colStatusStyle, 
     newColWraper, newColumn } from "./boardStyles";
+import { BoardType } from "@/types/types";
 
 type BProps = {
-    board: {
-        id: string
-        name: string, 
-        columns: [] 
-    }[]
+    board:BoardType[]
+    toggleIsTask: (colIndex: number, taskIndex: number) => void
 }
 
 const { Text } = Typography;
 
-const Board = ({ board }: BProps) => {
+const Board = ({ board, toggleIsTask }: BProps) => {
     console.log(board, 'single');
     const { currentTheme, isCollapse } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
     const { boards } = useAppSelector(state => state.boardsSlice);
     const dispatch = useAppDispatch();
     
-    const [siderWidth] = useSiderWidth();  
+    const [siderWidth] = useSiderWidth(); 
 
     return(
         <>
@@ -44,6 +42,7 @@ const Board = ({ board }: BProps) => {
                                 <Utility 
                                     text={'This board is empty. Create a new column to get started.'} 
                                     buttonText={'+ Add New Column'}
+                                    onClick={() => dispatch(editBoard())}
                                 />
                             ) : ( 
                                 <Row 
@@ -55,12 +54,12 @@ const Board = ({ board }: BProps) => {
                                 >
                                 <Col span={18}>
                                     <Row gutter={26}>
-                                        {item.columns.map((column: {name: string, tasks: []}, j: number) =>(
+                                        {item.columns.map((column, j: number) =>(
                                             <Col span={8} key={`${column.name}${j}`}>
                                                 <div className="flex-row flex-start">
                                                     <span style={{
                                                         ...colStatusStyle,
-                                                        backgroundColor: `${column.name === 'ToDo' ? '#49C4E5' : column.name === 'Doing' ? '#8471F2' : '#67E2AE'}`}}
+                                                        backgroundColor: `${j === 0 ? '#49C4E5' : j === 1 ? '#8471F2' : '#67E2AE'}`}}
                                                         >
                                                     </span>
                                                     <Text style={colName}>
@@ -68,7 +67,7 @@ const Board = ({ board }: BProps) => {
                                                     </Text>
                                                 </div>
                                                 
-                                                <BoardTask tasks={column.tasks}/>
+                                                <BoardTask tasks={column.tasks} colIndex={j} toggleIsTask={toggleIsTask}/>
                                             </Col>
                                         ))}
                                     </Row>

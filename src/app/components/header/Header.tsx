@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 import { Layout, Image, Typography } from "antd";
 import { useAppSelector } from "@/redux/store/hook";
 import { useSiderWidth } from "@/hook/useSiderWidth";
+import { TasksType } from "@/types/types";
 import NavList from "../../../shared-components/navList/NavList";
 import ThemeSwitcher from "../../../shared-components/ThemeSwitcher";
-import BoardTask from "../addEditDeleteBoardTask/AddEditDelBoardTask";
+import AddEditDelBoardTask from "../addEditDeleteBoardTask/AddEditDelBoardTask";
 import ArrowIcon from "../../../../public/assets/icon-arrow.svg";
 
 import { headerStyle, logoStyle, headerTitleStyle, 
@@ -21,7 +22,7 @@ const HeaderNav = () => {
     const removedSpecialChar = pathName.replace(/[/-]/g, ' ').trim();
 
     const [isOpen, setIsOpen] = useState(false);
-    const [boardColumn, setBoardColumn] = useState<[][]>();
+    const [boardColumn, setBoardColumn] = useState<{ name: string; tasks: TasksType[]; }[][]>();
     const { currentTheme, isCollapse } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
     const boardsData = useAppSelector(state => state.boardsSlice);
@@ -101,7 +102,7 @@ const HeaderNav = () => {
                     </div>
                 )}
                 
-                <BoardTask
+                <AddEditDelBoardTask
                     boardColumn={boardColumn} 
                     boardNames={boardNames}
                     md={md}

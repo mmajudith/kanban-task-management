@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Form, Input, Button, Typography } from "antd";
 import { useAppSelector } from "@/redux/store/hook";
-import { postDeletePut } from "@/app/services/postDeletePut";
+import { postDeletePut } from "@/app/clientApi/postDeletePut";
 import CloseIcon from '../../../public/assets/icon-cross.svg';
 import { btnStyles, colItem, columnsIput, inputStyles } from "./boardFormStyles";
 

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Modal, Form, Input, Button, Typography, notification } from "antd";
 import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
 import { boardModal } from "@/redux/features/utilitiesReducer";
-import { postDeletePut } from "@/app/services/postDeletePut";
+import { postDeletePut } from "@/app/clientApi/postDeletePut";
 import CloseIcon from '../../../public/assets/icon-cross.svg';
 import { btnStyles, colItem, columnsIput, inputStyles } from "./boardModalStyles";
 

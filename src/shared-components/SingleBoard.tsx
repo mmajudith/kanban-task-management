@@ -3,22 +3,20 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { notification } from "antd";
-import { postDeletePut } from "@/app/services/postDeletePut";
+import { postDeletePut } from "@/app/clientApi/postDeletePut";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { deleteBoard, deletedBoard } from "@/redux/features/utilitiesReducer";
 import Board from "./board/Board";
 import EditBoardModal from "./editBoardModal/EditBoardModal";
 import DeleteModal from "@/shared-components/deleteModal/DeleteModal";
+import { BoardType } from "@/types/types";
 
 type SBProps = {
-    board: {
-        id: string
-        name: string, 
-        columns: [] 
-    }[] 
+    board:BoardType[] 
+    toggleIsTask: (colIndex: number, taskIndex: number) => void
 }
 
-const SingleBoard = ({ board }: SBProps) => {
+const SingleBoard = ({ board,toggleIsTask }: SBProps) => {
     const router = useRouter();
     const [api, contextHolder] = notification.useNotification();
     const [isDeleting, setIsDeleting] = useState(false);
@@ -57,7 +55,7 @@ const SingleBoard = ({ board }: SBProps) => {
                     onDelete={handleDeleteBoard}
                 />
             )}
-            <Board board={ board }/>
+            <Board board={ board }  toggleIsTask={toggleIsTask}/>
         </>
     )
 }

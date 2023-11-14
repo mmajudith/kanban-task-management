@@ -2,19 +2,16 @@
 
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { postDeletePut } from "@/app/services/postDeletePut";
+import { postDeletePut } from "@/app/clientApi/postDeletePut";
 import { Modal, Form, Input, Button, Typography, notification } from "antd";
 import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
 import { editBoard, savedBoard } from "@/redux/features/utilitiesReducer";
 import CloseIcon from '../../../public/assets/icon-cross.svg';
 import { btnStyles, colItem, columnsIput, inputStyles } from "../createNewBoardModal/boardModalStyles";
+import { BoardType } from "@/types/types";
 
 type EBMProps = {
-    board: {
-        id: string,
-        name: string, 
-        columns: [] 
-    }[]
+    board:BoardType[]
 }
 
 const EditBoardModal = ({ board }: EBMProps) => {

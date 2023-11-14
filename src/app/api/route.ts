@@ -31,7 +31,7 @@ export const POST = async (req: NextRequest) => {
 }
 
 //Delete a board 
-export const DELETE = async (req: NextRequest, res: NextResponse) => {
+export const DELETE = async (req: NextRequest) => {
     const body = await req.json();
     const { status } = await postDeleteBoard(body, arrayRemove);
     if(status === 'network'){
@@ -42,7 +42,7 @@ export const DELETE = async (req: NextRequest, res: NextResponse) => {
 }
 
 //Update a board 
-export const PUT = async (req: NextRequest, res: NextResponse) => {
+export const PUT = async (req: NextRequest) => {
     const body = await req.json();
     const status = await updateBoard(body);
     if(status === 'network'){
