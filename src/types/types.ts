@@ -4,6 +4,7 @@ export type TasksType = {
     subtasks: [
         {
             isCompleted: boolean
+            title: string
         }
     ]
     title: string

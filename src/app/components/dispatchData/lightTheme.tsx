@@ -28,5 +28,8 @@ export const lightTheme = {
             labelColor: '#000112',
             itemMarginBottom: 0
         },
+        Select: {
+            selectorBg: '#FFF',
+        }
     }
 }

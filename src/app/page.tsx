@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useAppSelector, useAppDispatch } from '@/redux/store/hook';
-import { viewTask } from "@/redux/features/boardsReducer";
+import { useAppSelector } from '@/redux/store/hook';
 import { Layout } from 'antd';
 import SingleBoard from '../shared-components/SingleBoard';
 import { BoardType } from '@/types/types';
@@ -11,10 +10,18 @@ export default function Home() {
   const [ board, setBoard ] = useState<BoardType[]>([]);
   const { boards } = useAppSelector(state => state.boardsSlice);
   const { isDeleted } = useAppSelector(state => state.modalSlice);
-  const dispatch = useAppDispatch();
 
   const toggleIsTask = (colIndex: number, taskIndex: number) => {
-    dispatch(viewTask({colIndex, taskIndex}))
+    setBoard(board?.map((item) => ({
+        ...item,
+        columns: item.columns.map((column, index) => ({
+          ...column,
+          tasks: index === colIndex ? column.tasks.map((task, j) => ({...task,
+                  isTask: j === taskIndex && !task.isTask
+                })) : column.tasks,
+        })),
+      }))
+    )
   }
   
   useEffect(() => {

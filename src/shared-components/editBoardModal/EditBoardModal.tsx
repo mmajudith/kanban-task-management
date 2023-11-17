@@ -22,7 +22,7 @@ const EditBoardModal = ({ board }: EBMProps) => {
     const initialValues =  {name: board[0]?.name, columns: board[0]?.columns.map((column) => column)};
     
     const dispatch = useAppDispatch();
-    const { currentTheme, isEdit } = useAppSelector(state => state.modalSlice);
+    const { currentTheme, isEditBoard } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
 
     const onFinish = async (values: any) => {
@@ -55,7 +55,7 @@ const EditBoardModal = ({ board }: EBMProps) => {
         <>
             {contextHolder}
             <Modal title={'Edit Board'} 
-                open={isEdit} 
+                open={isEditBoard} 
                 onCancel={() => dispatch(editBoard())} 
                 closeIcon={null} centered
                 maskClosable={true} footer={null}

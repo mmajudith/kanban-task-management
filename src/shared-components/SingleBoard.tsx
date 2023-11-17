@@ -10,18 +10,20 @@ import Board from "./board/Board";
 import EditBoardModal from "./editBoardModal/EditBoardModal";
 import DeleteModal from "@/shared-components/deleteModal/DeleteModal";
 import { BoardType } from "@/types/types";
+import AddTask from "@/app/components/add-Task/AddTask";
 
 type SBProps = {
     board:BoardType[] 
     toggleIsTask: (colIndex: number, taskIndex: number) => void
 }
 
-const SingleBoard = ({ board,toggleIsTask }: SBProps) => {
+const SingleBoard = ({ board, toggleIsTask }: SBProps) => {
     const router = useRouter();
     const [api, contextHolder] = notification.useNotification();
     const [isDeleting, setIsDeleting] = useState(false);
     const dispatch = useAppDispatch();
-    const { isDelete, isEdit } = useAppSelector(state => state.modalSlice);
+    const { isDelete, isEditBoard, isAddTask } = useAppSelector(state => state.modalSlice);
+    const columnsNames = board[0]?.columns.map(({name}) => ({value: name, label: name})); 
     
     //Function that delete a board with its children
     const handleDeleteBoard = async () => {
@@ -44,7 +46,8 @@ const SingleBoard = ({ board,toggleIsTask }: SBProps) => {
 
     return (
         <>
-            {isEdit && (<EditBoardModal board={board} />)}
+            {isAddTask && ( <AddTask columnsNames={columnsNames}/>)}
+            {isEditBoard && (<EditBoardModal board={board} />)}
             {isDelete && (
                 <DeleteModal
                     isDeleting={isDeleting} 

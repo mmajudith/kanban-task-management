@@ -8,9 +8,10 @@ const initialState = {
     isCollapse: false,
     isBoardModal: false,
     isDelete: false,
-    isEdit: false,
+    isEditBoard: false,
     isSavedBoard: false,
-    isDeleted: false
+    isDeleted: false,
+    isAddTask: false
 }
 
 export const modalSlice = createSlice({
@@ -27,13 +28,16 @@ export const modalSlice = createSlice({
       state.isDelete = !state.isDelete;
     },
     editBoard: (state) => {
-      state.isEdit = !state.isEdit;
+      state.isEditBoard = !state.isEditBoard;
     },
     savedBoard: (state) => {
       state.isSavedBoard = !state.isSavedBoard;
     },
     deletedBoard: (state) => {
       state.isDeleted = !state.isDeleted;
+    },
+    addTask: (state) => {
+      state.isAddTask = !state.isAddTask;
     },
   },
   extraReducers: (builder) => {
@@ -44,7 +48,7 @@ export const modalSlice = createSlice({
 });
 
 export const { collapse, boardModal, 
-  deleteBoard, editBoard, 
-  deletedBoard, savedBoard } = modalSlice.actions
+  deleteBoard, editBoard, deletedBoard, 
+  savedBoard, addTask } = modalSlice.actions
 
 export default modalSlice.reducer

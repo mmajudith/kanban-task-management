@@ -22,11 +22,16 @@ export const darkTheme = {
             titleColor: '#FFF',
             titleFontSize: 18,
             contentBg: '#2B2C37',
-            headerBg:' #2B2C37',
+            headerBg:   '#2B2C37',
         },
         Form: {
             labelColor: '#FFF',
             itemMarginBottom: 0
         },
+        Select: {
+            clearBg: '#2B2C37',
+            optionActiveBg: '#2B2C37',
+            selectorBg: '#2B2C37',
+        }
     }
 }

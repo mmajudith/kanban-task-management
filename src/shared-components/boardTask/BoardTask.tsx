@@ -25,9 +25,7 @@ const BoardTask = ({ tasks, colIndex, toggleIsTask }: BTProps) => {
 
     return(
         <>
-            {tasks.map((task, k: number) => {
-                // console.log(task, 'boardTask')
-            return(
+            {tasks.map((task, k: number) => (
                 <div 
                     key={`${task.status}${k}`} 
                     style={{
@@ -45,9 +43,17 @@ const BoardTask = ({ tasks, colIndex, toggleIsTask }: BTProps) => {
                     <Text style={subtasks}>
                         {`${subTasksCompleted(task.subtasks)} of ${task.subtasks.length} subtasks`}
                     </Text>
-                    {task.isTask && (<ViewTask task={task} index={k}/>)}
+                    {task.isTask && (
+                        <ViewTask task={task} 
+                            index={k} 
+                            colIndex={colIndex}
+                            isView={task.isTask}
+                            toggleIsTask={toggleIsTask}
+                            subTasksCompleted={subTasksCompleted}
+                        />
+                    )}
                 </div>
-            )})}
+            ))}
         </>
     )
 }
