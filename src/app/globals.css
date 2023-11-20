@@ -69,6 +69,10 @@ ul{
     background: #FF9898 !important;
 }
 
+.sub-hover:hover{
+    background: rgba(99, 95, 199, 0.25) !important;
+}
+
 /* Navigation list active styles */
 .active{
     width: calc(100% - 23px);

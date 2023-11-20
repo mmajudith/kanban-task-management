@@ -58,7 +58,7 @@ const SingleBoard = ({ board, toggleIsTask }: SBProps) => {
                     onDelete={handleDeleteBoard}
                 />
             )}
-            <Board board={ board }  toggleIsTask={toggleIsTask}/>
+            <Board columnsNames={columnsNames} board={ board }  toggleIsTask={toggleIsTask}/>
         </>
     )
 }

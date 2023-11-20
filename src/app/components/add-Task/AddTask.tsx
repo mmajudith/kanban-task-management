@@ -3,6 +3,7 @@ import { Modal, Form, Input,Typography, Button, Select } from "antd";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { addTask } from "@/redux/features/utilitiesReducer";
 import CloseIcon from '../../../../public/assets/icon-cross.svg';
+import ArrowIcon from '../../../../public/assets/icon-arrow.svg';
 import { btnStyles, colItem, columnsIput, inputStyles } from "@/shared-components/createNewBoardModal/boardModalStyles";
 
 type ATProps = {
@@ -95,7 +96,7 @@ const AddTask = ({columnsNames}: ATProps) => {
                     Status
                 </Typography.Text>
 
-                <Select 
+                <Select suffixIcon={<ArrowIcon />} 
                     style={{width: '100%', marginTop: 10}}
                     options={columnsNames} size='large'
                     defaultValue={columnsNames[0].value}

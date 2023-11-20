@@ -89,7 +89,7 @@ const HeaderNav = () => {
                     {!md && (
                         <ArrowIcon
                             onClick={isOpenHandler}
-                            style={{cursor: 'pointer', transform: isOpen? "rotate(0deg)" : "rotate(-180deg)"}}
+                            style={{cursor: 'pointer', transform: isOpen? "rotate(-180deg)" : "rotate(0deg)"}}
                         />
                     )}
                 </div>

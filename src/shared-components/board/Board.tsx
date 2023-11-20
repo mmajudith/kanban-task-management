@@ -11,13 +11,14 @@ import { colContainer, colName, colStatusStyle,
 import { BoardType } from "@/types/types";
 
 type BProps = {
+    columnsNames: {value: string, label: string}[]
     board:BoardType[]
     toggleIsTask: (colIndex: number, taskIndex: number) => void
 }
 
 const { Text } = Typography;
 
-const Board = ({ board, toggleIsTask }: BProps) => {
+const Board = ({ columnsNames, board, toggleIsTask }: BProps) => {
     console.log(board, 'single');
     const { currentTheme, isCollapse } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
@@ -67,7 +68,7 @@ const Board = ({ board, toggleIsTask }: BProps) => {
                                                     </Text>
                                                 </div>
                                                 
-                                                <BoardTask tasks={column.tasks} colIndex={j} toggleIsTask={toggleIsTask}/>
+                                                <BoardTask columnsNames={columnsNames} tasks={column.tasks} colIndex={j} toggleIsTask={toggleIsTask}/>
                                             </Col>
                                         ))}
                                     </Row>

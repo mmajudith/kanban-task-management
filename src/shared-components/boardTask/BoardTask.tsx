@@ -1,11 +1,12 @@
 import { Typography } from "antd";
-import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
+import { useAppSelector } from "@/redux/store/hook";
 import { TasksType } from "@/types/types";
 import ViewTask from "@/shared-components/viewTask/ViewTask";
 
 import { colTasksContainer, subtasks } from "./boardTaskStyles";
 
 type BTProps = {
+    columnsNames: {value: string, label: string}[]
     tasks: TasksType[]  
     colIndex: number
     toggleIsTask: (colIndex: number, taskIndex: number) => void
@@ -13,7 +14,7 @@ type BTProps = {
 
 const { Text } = Typography;
 
-const BoardTask = ({ tasks, colIndex, toggleIsTask }: BTProps) => {
+const BoardTask = ({ columnsNames, tasks, colIndex, toggleIsTask }: BTProps) => {
     const { isDark } = useAppSelector(state => state.modalSlice.currentTheme);
 
     //function that return the total number of subtasks complete
@@ -33,7 +34,8 @@ const BoardTask = ({ tasks, colIndex, toggleIsTask }: BTProps) => {
                         backgroundColor: `${ !isDark ? `#FFF`:`#2B2C37`}`,
                     }}
                     className="hover-task"
-                    onClick={() => { 
+                    onClick={(e) => { 
+                        // e.stopPropagation();
                         toggleIsTask(colIndex, k);
                     }}
                 >
@@ -44,10 +46,11 @@ const BoardTask = ({ tasks, colIndex, toggleIsTask }: BTProps) => {
                         {`${subTasksCompleted(task.subtasks)} of ${task.subtasks.length} subtasks`}
                     </Text>
                     {task.isTask && (
-                        <ViewTask task={task} 
+                        <ViewTask 
+                            columnsNames={columnsNames}
+                            task={task} 
                             index={k} 
                             colIndex={colIndex}
-                            isView={task.isTask}
                             toggleIsTask={toggleIsTask}
                             subTasksCompleted={subTasksCompleted}
                         />

@@ -40,7 +40,13 @@ const  AddEditDelBoardTask = ({boardColumn, boardNames, md, sm}: AddTaskProps) =
             </Button>
                 
             {boardNames?.length > 0 && (
-               <DropDown label1={'Edit Board'} label2={'Delete Board'} onClick={onClick}/>
+               <DropDown label1={'Edit Board'} 
+                    label2={'Delete Board'} 
+                    placement={"bottomRight"}
+                    position={'fixed'}
+                    top={75} 
+                    onClick={onClick}
+                />
             )}
         </Space>
     )

@@ -29,8 +29,6 @@ export const darkTheme = {
             itemMarginBottom: 0
         },
         Select: {
-            clearBg: '#2B2C37',
-            optionActiveBg: '#2B2C37',
             selectorBg: '#2B2C37',
         }
     }
