@@ -16,7 +16,6 @@ import { headerStyle, logoStyle, headerTitleStyle,
 } from "./headerStyles";
 
 
-
 const HeaderNav = () => {
     const pathName = usePathname();
     const removedSpecialChar = pathName.replace(/[/-]/g, ' ').trim();

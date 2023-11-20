@@ -44,6 +44,7 @@ const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCo
                         />
                     </div>
                 }
+                style={{padding: '15px 0px'}}
                 open={isTask} maskClosable={true} destroyOnClose
                 onCancel={(e) => {toggleIsTask(colIndex, index)}}
                 closeIcon={null} centered footer={null} 
