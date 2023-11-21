@@ -6,13 +6,13 @@ import { btnCon, btnStyles, textStyles } from "./deleteStyles";
 type DMProps = {
     isDeleting: boolean
     isDelete: boolean
-    contextHolder:  unknown
-    name: string
+    contextHolder?:  unknown
+    description: string
     onClick: () => void
     onDelete: () => void
 }
 
-const DeleteModal = ({ isDeleting, isDelete, contextHolder, name, onClick, onDelete}: DMProps) => {
+const DeleteModal = ({ isDeleting, isDelete, contextHolder, description, onClick, onDelete}: DMProps) => {
     
     return(
         <>
@@ -23,8 +23,7 @@ const DeleteModal = ({ isDeleting, isDelete, contextHolder, name, onClick, onDel
                 maskClosable={false} footer={null}
             >
                 <Typography.Text style={textStyles}>
-                    Are you sure you want to delete the '{name}' board? 
-                    This action will remove all columns and tasks and cannot be reversed.
+                    {description}
                 </Typography.Text>
                 
                 <div className="flex-row between" style={btnCon}>

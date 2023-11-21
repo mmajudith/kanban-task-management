@@ -10,7 +10,7 @@ import Board from "./board/Board";
 import EditBoardModal from "./editBoardModal/EditBoardModal";
 import DeleteModal from "@/shared-components/deleteModal/DeleteModal";
 import { BoardType } from "@/types/types";
-import AddTask from "@/app/components/add-Task/AddTask";
+import AddTask from "@/app/components/addTaskModal/AddTask";
 
 type SBProps = {
     board:BoardType[] 
@@ -22,7 +22,7 @@ const SingleBoard = ({ board, toggleIsTask }: SBProps) => {
     const [api, contextHolder] = notification.useNotification();
     const [isDeleting, setIsDeleting] = useState(false);
     const dispatch = useAppDispatch();
-    const { isDelete, isEditBoard, isAddTask } = useAppSelector(state => state.modalSlice);
+    const { isDeleteBoard, isEditBoard, isAddTask } = useAppSelector(state => state.modalSlice);
     const columnsNames = board[0]?.columns.map(({name}) => ({value: name, label: name})); 
     
     //Function that delete a board with its children
@@ -48,13 +48,14 @@ const SingleBoard = ({ board, toggleIsTask }: SBProps) => {
         <>
             {isAddTask && ( <AddTask columnsNames={columnsNames}/>)}
             {isEditBoard && (<EditBoardModal board={board} />)}
-            {isDelete && (
+            {isDeleteBoard && (
                 <DeleteModal
                     isDeleting={isDeleting} 
-                    isDelete={isDelete} 
+                    isDelete={isDeleteBoard} 
                     onClick={() => dispatch(deleteBoard())}
                     contextHolder={contextHolder}
-                    name={board[0]?.name}
+                    description={`Are you sure you want to delete the '${board[0]?.name}' board? 
+                        This action will remove all columns and tasks and cannot be reversed.`}
                     onDelete={handleDeleteBoard}
                 />
             )}

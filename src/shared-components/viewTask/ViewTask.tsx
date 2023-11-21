@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { Checkbox, Modal, Typography, Select } from "antd";
-import { useAppSelector } from "@/redux/store/hook";
+import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
+import { deleteTask, editTask } from "@/redux/features/utilitiesReducer";
 import type { MenuProps } from "antd";
 import DropDown from "../dropdown/DropDown";
-import ArrowIcon from "../../../public/assets/icon-arrow.svg"
+import EditTask from "../../app/components/editTaskModal/EditTask";
+import DeleteModal from "../deleteModal/DeleteModal";
+import ArrowIcon from "../../../public/assets/icon-arrow.svg";
 import { TasksType } from "@/types/types";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 
@@ -19,17 +23,23 @@ const { Text } = Typography;
 
 const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCompleted }: VTProps) => {
     console.log(task, 'viewtask')
-    console.log(index, 'viewtask index')
+    const [isDeleting, setIsDeleting] = useState(false);
     const { description, isTask, status, subtasks, title } = task;
-    const { isDark } = useAppSelector(state => state.modalSlice.currentTheme);
+    const { currentTheme, isEditTask, isDeleteTask } = useAppSelector(state => state.modalSlice);
+    const { isDark } = currentTheme;
+    const dispatch = useAppDispatch()
 
     const onClick: MenuProps['onClick'] = ({key}) => {
-        if(key === '1') console.log('edited');
-        if(key === '2') console.log('deleted');
+        if(key === '1') dispatch(editTask());
+        if(key === '2') dispatch(deleteTask());
     }
 
     const onChange = (e: CheckboxChangeEvent) => {
         console.log('checked = ', e.target.checked)
+    }
+
+    const handleDeleteTask = () => {
+
     }
 
     return (
@@ -92,7 +102,21 @@ const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCo
                         defaultValue={status}
                     />
                 </div>
+
             </Modal>
+
+            {isEditTask && (<EditTask columnsNames={columnsNames} task={task}/>)}
+            {isDeleteTask && (
+                <DeleteModal 
+                    isDeleting={isDeleting} 
+                    isDelete={isDeleteTask} 
+                    onClick={() => dispatch(deleteTask())}
+                    // contextHolder={contextHolder}
+                    description={`Are you sure you want to delete the ‘${title}’ task and its subtasks? 
+                        This action cannot be reversed.`}
+                    onDelete={handleDeleteTask}
+                />
+            )}
         </div>
     )
 }

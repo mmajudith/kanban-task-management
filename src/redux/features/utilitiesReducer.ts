@@ -7,11 +7,13 @@ const initialState = {
     currentTheme: JSON.parse(typeof window !== "undefined" && window.localStorage.getItem('theme') || '{}') || null,
     isCollapse: false,
     isBoardModal: false,
-    isDelete: false,
+    isDeleteBoard: false,
     isEditBoard: false,
     isSavedBoard: false,
     isDeleted: false,
-    isAddTask: false
+    isAddTask: false,
+    isEditTask: false,
+    isDeleteTask: false
 }
 
 export const modalSlice = createSlice({
@@ -25,7 +27,7 @@ export const modalSlice = createSlice({
       state.isBoardModal = !state.isBoardModal;
     },
     deleteBoard: (state) => {
-      state.isDelete = !state.isDelete;
+      state.isDeleteBoard = !state.isDeleteBoard;
     },
     editBoard: (state) => {
       state.isEditBoard = !state.isEditBoard;
@@ -39,6 +41,12 @@ export const modalSlice = createSlice({
     addTask: (state) => {
       state.isAddTask = !state.isAddTask;
     },
+    editTask: (state) => {
+      state.isEditTask = !state.isEditTask;
+    },
+    deleteTask: (state) => {
+      state.isDeleteTask = !state.isDeleteTask;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(toggleTheme.fulfilled, (state, { payload }) => {
@@ -49,6 +57,6 @@ export const modalSlice = createSlice({
 
 export const { collapse, boardModal, 
   deleteBoard, editBoard, deletedBoard, 
-  savedBoard, addTask } = modalSlice.actions
+  savedBoard, addTask, editTask, deleteTask } = modalSlice.actions
 
 export default modalSlice.reducer
