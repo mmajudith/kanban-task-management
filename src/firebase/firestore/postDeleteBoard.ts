@@ -6,7 +6,9 @@ export const postDeleteBoard = async (boardTask: BoardType | TasksType, arrMetho
     console.log(boardTask, 'board tasksssssss');
     try{
         const boardsRef = doc(db, 'boards', 'data');
-        await updateDoc(boardsRef, { boards: arrMethod({...boardTask}) });
+        if(boardTask.hasOwnProperty('name')){
+            await updateDoc(boardsRef, { boards: arrMethod({...boardTask}) });
+        }
 
         return {status: 'success'}
 
