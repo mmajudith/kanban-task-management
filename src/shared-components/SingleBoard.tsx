@@ -23,7 +23,7 @@ const SingleBoard = ({ board, toggleIsTask }: SBProps) => {
     const [isDeleting, setIsDeleting] = useState(false);
     const dispatch = useAppDispatch();
     const { isDeleteBoard, isEditBoard, isAddTask } = useAppSelector(state => state.modalSlice);
-    const columnsNames = board[0]?.columns.map(({name}) => ({value: name, label: name})); 
+    const columnsNames = board && board[0]?.columns.map(({name}) => ({value: name, label: name})); 
     
     //Function that delete a board with its children
     const handleDeleteBoard = async () => {

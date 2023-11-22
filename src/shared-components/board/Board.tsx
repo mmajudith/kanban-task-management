@@ -36,7 +36,7 @@ const Board = ({ columnsNames, board, toggleIsTask }: BProps) => {
                     onClick={() => dispatch(boardModal())}
                 />
             )}
-            {board.length &&
+            {Array.isArray(boards) && board.length &&
                 board.map((item, index) => ( 
                     <div key={`${item.name}${index}`} className="w-100 auto">
                         {!item.columns.length ? (

@@ -15,6 +15,8 @@ type AddTaskProps = {
 }
 
 const  AddEditDelBoardTask = ({boardColumn, boardNames, md, sm}: AddTaskProps) => {
+    console.log(boardColumn, 'boardColumn');
+    console.log(boardColumn?.length, 'boardColumnLength');
     const dispatch = useAppDispatch();
     const onClick: MenuProps['onClick'] = ({key}) => {
         if(key === '1') dispatch(editBoard());
@@ -25,16 +27,16 @@ const  AddEditDelBoardTask = ({boardColumn, boardNames, md, sm}: AddTaskProps) =
         <Space size={sm ? 20:10}>
             <Button 
                 type="primary" 
-                disabled={Array.isArray(boardColumn) && boardColumn[0].length > 0 ? false : true}
+                disabled={Array.isArray(boardColumn) && boardColumn[0] && boardColumn[0].length > 0 ? false : true}
                 onClick={() => dispatch(addTask())}
                 style={{
                     ...addTaskStyle,  
                     width: md? 164:45, 
                     height:md? 48:32, 
-                    backgroundColor: Array.isArray(boardColumn) && boardColumn[0].length > 0 ? '#635FC7' : '#d8d7f1',
-                    cursor: Array.isArray(boardColumn) && boardColumn[0].length > 0 ? 'pointer' : 'auto',
+                    backgroundColor: Array.isArray(boardColumn) && boardColumn[0] && boardColumn[0].length > 0 ? '#635FC7' : '#d8d7f1',
+                    cursor: Array.isArray(boardColumn) && boardColumn[0] && boardColumn[0].length > 0 ? 'pointer' : 'auto',
                 }}
-                className={`${Array.isArray(boardColumn) && boardColumn[0].length > 0 && `btn-hover`} flex-row center`}
+                className={`${Array.isArray(boardColumn) && boardColumn[0] && boardColumn[0].length > 0 && `btn-hover`} flex-row center`}
             >
                 {md ? ('+ Add New Task') : ( <AddIcon />)}
             </Button>

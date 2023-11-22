@@ -18,7 +18,7 @@ const EditTask = ({ columnsNames, task }: ETProps) => {
         description,
         isTask: false,
         status,
-        subTasks: subtasks.map(subtask => subtask),
+        subtasks: subtasks.map(subtask => subtask),
         title
     }
 
@@ -40,7 +40,7 @@ const EditTask = ({ columnsNames, task }: ETProps) => {
                     // onFinish={onFinish}
                     initialValues={initialValues}
                     layout="vertical" preserve={false}
-                    name="board-task" requiredMark={false}
+                    name="edit-task" requiredMark={false}
                     colon={false} autoComplete='off'
                 >
                     <Form.Item label={'Title'} name={'title'} 
@@ -66,7 +66,7 @@ const EditTask = ({ columnsNames, task }: ETProps) => {
 
                     <Typography.Text>Subtasks</Typography.Text>
 
-                    <Form.List name={'subTasks'}>
+                    <Form.List name={'subtasks'}>
                         {(fields, { add, remove}) => (
                             <>
                                 {fields.map((field, index) => (
