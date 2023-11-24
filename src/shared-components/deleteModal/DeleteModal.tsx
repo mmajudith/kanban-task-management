@@ -4,6 +4,7 @@ import { Button, Modal, Typography } from "antd";
 import { btnCon, btnStyles, textStyles } from "./deleteStyles";
 
 type DMProps = {
+    name: string
     isDeleting: boolean
     isDelete: boolean
     contextHolder?:  unknown
@@ -12,12 +13,12 @@ type DMProps = {
     onDelete: () => void
 }
 
-const DeleteModal = ({ isDeleting, isDelete, contextHolder, description, onClick, onDelete}: DMProps) => {
+const DeleteModal = ({ name, isDeleting, isDelete, contextHolder, description, onClick, onDelete}: DMProps) => {
     
     return(
         <>
             {contextHolder}
-            <Modal title={<p className="del-title">Delete this board?</p>}
+            <Modal title={<p className="del-title">Delete this {name}?</p>}
                 open={isDelete}  
                 closeIcon={null} centered
                 maskClosable={false} footer={null}

@@ -46,10 +46,11 @@ const SingleBoard = ({ board, toggleIsTask }: SBProps) => {
 
     return (
         <>
-            {isAddTask && ( <AddTask columnsNames={columnsNames}/>)}
+            {isAddTask && ( <AddTask boardID={board[0].id} columnsNames={columnsNames}/>)}
             {isEditBoard && (<EditBoardModal board={board} />)}
             {isDeleteBoard && (
                 <DeleteModal
+                    name={'board'}
                     isDeleting={isDeleting} 
                     isDelete={isDeleteBoard} 
                     onClick={() => dispatch(deleteBoard())}

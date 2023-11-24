@@ -6,6 +6,7 @@ import ViewTask from "@/shared-components/viewTask/ViewTask";
 import { colTasksContainer, subtasks } from "./boardTaskStyles";
 
 type BTProps = {
+    boardID: string
     columnsNames: {value: string, label: string}[]
     tasks: TasksType[]  
     colIndex: number

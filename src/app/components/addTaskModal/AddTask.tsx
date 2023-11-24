@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { Modal, Form, Input,Typography, Button, Select, notification } from "antd";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { postDeletePut } from '@/app/clientApi/postDeletePut';
-import { addTask } from "@/redux/features/utilitiesReducer";
+import { savedBoard, addTask } from "@/redux/features/utilitiesReducer";
 import CloseIcon from '../../../../public/assets/icon-cross.svg';
 import ArrowIcon from '../../../../public/assets/icon-arrow.svg';
 import { btnStyles, colItem, columnsIput, inputStyles } from "@/shared-components/createNewBoardModal/boardModalStyles";
 
 type ATProps = {
+    boardID: string
     columnsNames: {value: string, label: string}[]
 }
 
-const AddTask = ({columnsNames}: ATProps) => {
+const AddTask = ({boardID, columnsNames}: ATProps) => {
     const initialValues = { description: '', subtasks: [{ title: '' }, { title: ''}], title: '' }
     const [api, contextHolder] = notification.useNotification();
     const [ status, setStatus ] = useState<string>(columnsNames[0].value)
@@ -25,8 +26,10 @@ const AddTask = ({columnsNames}: ATProps) => {
             ...values,   
             isTask: false, 
             status,
-            subtasks: values.subtasks.map((subtask: { title: '' }) => ({...subtask, isCompleted: false}))
+            subtasks: values.subtasks.map((subtask: { title: '' }) => ({...subtask, isCompleted: false})),
+            id: boardID
         }
+        console.log(newTask, 'newTaskkkkkk')
         setIsCreatingTask(true);
       
         const { message } = await postDeletePut('POST', newTask);
@@ -34,6 +37,7 @@ const AddTask = ({columnsNames}: ATProps) => {
             setIsCreatingTask(false);
             api['error']({message, placement: 'top'});
         }
+        dispatch(savedBoard())
         api['success']({message: `${newTask.title} task successfully created.`, placement: 'top'});
         setIsCreatingTask(false);
     }

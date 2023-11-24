@@ -108,6 +108,7 @@ const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCo
             {isEditTask && (<EditTask columnsNames={columnsNames} task={task}/>)}
             {isDeleteTask && (
                 <DeleteModal 
+                    name={'task'}
                     isDeleting={isDeleting} 
                     isDelete={isDeleteTask} 
                     onClick={() => dispatch(deleteTask())}

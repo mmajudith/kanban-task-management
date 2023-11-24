@@ -38,7 +38,7 @@ const Board = ({ columnsNames, board, toggleIsTask }: BProps) => {
             )}
             {Array.isArray(boards) && board.length &&
                 board.map((item, index) => ( 
-                    <div key={`${item.name}${index}`} className="w-100 auto">
+                    <div key={item.id} className="w-100 auto">
                         {!item.columns.length ? (
                                 <Utility 
                                     text={'This board is empty. Create a new column to get started.'} 
@@ -68,7 +68,12 @@ const Board = ({ columnsNames, board, toggleIsTask }: BProps) => {
                                                     </Text>
                                                 </div>
                                                 
-                                                <BoardTask columnsNames={columnsNames} tasks={column.tasks} colIndex={j} toggleIsTask={toggleIsTask}/>
+                                                <BoardTask 
+                                                    boardID={item.id}
+                                                    columnsNames={columnsNames} 
+                                                    tasks={column.tasks} colIndex={j} 
+                                                    toggleIsTask={toggleIsTask}
+                                                />
                                             </Col>
                                         ))}
                                     </Row>
