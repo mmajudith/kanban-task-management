@@ -15,7 +15,7 @@ type BTProps = {
 
 const { Text } = Typography;
 
-const BoardTask = ({ columnsNames, tasks, colIndex, toggleIsTask }: BTProps) => {
+const BoardTask = ({ boardID, columnsNames, tasks, colIndex, toggleIsTask }: BTProps) => {
     const { isDark } = useAppSelector(state => state.modalSlice.currentTheme);
 
     //function that return the total number of subtasks complete
@@ -36,7 +36,6 @@ const BoardTask = ({ columnsNames, tasks, colIndex, toggleIsTask }: BTProps) => 
                     }}
                     className="hover-task"
                     onClick={(e) => { 
-                        // e.stopPropagation();
                         toggleIsTask(colIndex, k);
                     }}
                 >
@@ -47,7 +46,7 @@ const BoardTask = ({ columnsNames, tasks, colIndex, toggleIsTask }: BTProps) => 
                         {`${subTasksCompleted(task.subtasks)} of ${task.subtasks.length} subtasks`}
                     </Text>
                     {task.isTask && (
-                        <ViewTask 
+                        <ViewTask boardID={boardID}
                             columnsNames={columnsNames}
                             task={task} 
                             index={k} 

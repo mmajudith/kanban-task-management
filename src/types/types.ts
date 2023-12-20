@@ -9,7 +9,16 @@ export type TasksType = {
     ]
     title: string
     isTask: boolean
-    id: string | undefined
+    id: string 
+    colIndex?: number, 
+    taskIndex?: number,
+}
+
+export type DeleteTaskType = {
+    id: string, 
+    colIndex: number | undefined, 
+    taskIndex: number | undefined,
+    status?: string
 }
 
 export type BoardType = {
@@ -20,7 +29,14 @@ export type BoardType = {
         tasks: TasksType[]
     }[]
     status?: string
+    colIndex?: number, 
+    taskIndex?: number,
 }
+
+export type ColumnType = { 
+    name: string,
+    tasks: TasksType[]
+}[]
  
 export type BoardsState = {
     boards: BoardType[]

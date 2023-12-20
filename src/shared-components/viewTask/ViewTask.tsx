@@ -1,7 +1,10 @@
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Checkbox, Modal, Typography, Select } from "antd";
+import { Checkbox, Modal, Typography, Select, notification } from "antd";
 import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
-import { deleteTask, editTask } from "@/redux/features/utilitiesReducer";
+import { postDeletePut } from "@/app/clientApi/postDeletePut";
+import { shuffletask } from "@/firebase/firestore/tasks/shuffleTask";
+import { editTask, savedBoard, deleteTask, deletedBoard } from "@/redux/features/utilitiesReducer";
 import type { MenuProps } from "antd";
 import DropDown from "../dropdown/DropDown";
 import EditTask from "../../app/components/editTaskModal/EditTask";
@@ -11,6 +14,7 @@ import { TasksType } from "@/types/types";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 type VTProps = {
+    boardID: string
     columnsNames: {value: string, label: string}[]
     task: TasksType
     index: number
@@ -21,10 +25,13 @@ type VTProps = {
 
 const { Text } = Typography;
 
-const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCompleted }: VTProps) => {
-    console.log(task, 'viewtask')
-    const [isDeleting, setIsDeleting] = useState(false);
+const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, subTasksCompleted }: VTProps) => {
+    const pathName = usePathname();
+    const [api, contextHolder] = notification.useNotification();
+
     const { description, isTask, status, subtasks, title } = task;
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [colStatus, setColStatus] = useState(status);
     const { currentTheme, isEditTask, isDeleteTask } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
     const dispatch = useAppDispatch()
@@ -38,8 +45,36 @@ const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCo
         console.log('checked = ', e.target.checked)
     }
 
-    const handleDeleteTask = () => {
+    const handleDeleteTask = async() => {
+        const deletedTask = { id: boardID, colIndex, taskIndex: index }
+        setIsDeleting(true);
+        const { message } = await postDeletePut('DELETE', deletedTask)
+        if(message === 'Network error!'){
+            setIsDeleting(false);
+            api['error']({message, placement: 'top'});
+        }
+        api['success']({message: `${title} task successfully deleted`, placement: 'top'});
+    
+        window.setTimeout(() => {
+            dispatch(deleteTask());
+            toggleIsTask(colIndex, index);
+        
+            if(pathName === `/`){
+                dispatch(deletedBoard());
+            }else{
+                dispatch(savedBoard())
+            }
+        }, 3000);
+    }
 
+    const handleStatus = async() => {
+        const prevStatus = status;
+        const currentStatus = colStatus;
+        
+        if(prevStatus !== currentStatus){
+            await shuffletask(boardID, colIndex, index, currentStatus );
+            dispatch(savedBoard())
+        }
     }
 
     return (
@@ -56,7 +91,10 @@ const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCo
                 }
                 style={{padding: '15px 0px'}}
                 open={isTask} maskClosable={true} destroyOnClose
-                onCancel={(e) => {toggleIsTask(colIndex, index)}}
+                onCancel={(e) => {
+                    handleStatus();
+                    toggleIsTask(colIndex, index);
+                }}
                 closeIcon={null} centered footer={null} 
             >
 
@@ -96,7 +134,7 @@ const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCo
                         Current Status
                     </Text>
                     <Select suffixIcon={<ArrowIcon />} 
-                    // className="ant-select-suffix"
+                        onChange={(value) => setColStatus(value)}
                         style={{width: '100%', marginTop: 10}}
                         options={columnsNames} size='large'
                         defaultValue={status}
@@ -112,7 +150,7 @@ const ViewTask = ({columnsNames, task, index, colIndex, toggleIsTask, subTasksCo
                     isDeleting={isDeleting} 
                     isDelete={isDeleteTask} 
                     onClick={() => dispatch(deleteTask())}
-                    // contextHolder={contextHolder}
+                    contextHolder={contextHolder}
                     description={`Are you sure you want to delete the ‘${title}’ task and its subtasks? 
                         This action cannot be reversed.`}
                     onDelete={handleDeleteTask}

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Modal, Typography } from "antd";
+import { Button, Modal, Typography, Grid } from "antd";
 import { btnCon, btnStyles, textStyles } from "./deleteStyles";
 
 type DMProps = {
@@ -14,7 +14,9 @@ type DMProps = {
 }
 
 const DeleteModal = ({ name, isDeleting, isDelete, contextHolder, description, onClick, onDelete}: DMProps) => {
-    
+    const { useBreakpoint } = Grid;
+    const { md } = useBreakpoint();
+
     return(
         <>
             {contextHolder}
@@ -27,17 +29,23 @@ const DeleteModal = ({ name, isDeleting, isDelete, contextHolder, description, o
                     {description}
                 </Typography.Text>
                 
-                <div className="flex-row between" style={btnCon}>
+                <div className={`${!md ? `flex-col center` : `flex-row between`}`} style={btnCon}>
                     <Button type="primary"
                         onClick={onDelete} 
-                        style={{...btnStyles, cursor: isDeleting ? 'wait' : 'pointer'}} 
+                        style={{...btnStyles,
+                            width: !md ? `100%` : `50%`, 
+                            cursor: isDeleting ? 'wait' : 'pointer'
+                        }} 
                         className="btn-del"
                     >
                         {isDeleting ? 'Deleting' : 'Delete'}
                     </Button>
                     <Button 
                         onClick={onClick} 
-                        style={{...btnStyles, cursor: isDeleting ? 'default' : 'pointer'}}
+                        style={{...btnStyles,
+                            width: !md ? `100%` : `50%`, 
+                            cursor: isDeleting ? 'default' : 'pointer'
+                        }}
                         disabled={isDeleting}
                     >
                         Cancel

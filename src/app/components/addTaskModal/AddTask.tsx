@@ -29,7 +29,6 @@ const AddTask = ({boardID, columnsNames}: ATProps) => {
             subtasks: values.subtasks.map((subtask: { title: '' }) => ({...subtask, isCompleted: false})),
             id: boardID
         }
-        console.log(newTask, 'newTaskkkkkk')
         setIsCreatingTask(true);
       
         const { message } = await postDeletePut('POST', newTask);

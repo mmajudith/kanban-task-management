@@ -1,9 +1,12 @@
-import { db } from '../firebaseConfig';
+import { db } from '../../firebaseConfig';
 import { runTransaction } from 'firebase/firestore';
 import type { DocumentReference, DocumentData } from 'firebase/firestore';
-import { BoardType, TasksType } from '@/types/types';
+import { BoardType, DeleteTaskType, TasksType } from '@/types/types';
 
-export const postTask = async (newTask:BoardType | TasksType, boardsRef: DocumentReference<DocumentData>) => {
+export const postTask = async (
+    newTask: BoardType | TasksType | DeleteTaskType,
+    boardsRef: DocumentReference<DocumentData>
+    ) => {
     let { id, ...task } = newTask;
     await runTransaction(db, async (transaction) => {
         const boardsDoc = await transaction.get(boardsRef);

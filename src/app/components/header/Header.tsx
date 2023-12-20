@@ -52,7 +52,7 @@ const HeaderNav = () => {
             className="flex-row between"
         >
             {md ? (
-                <div 
+                <div
                     style={{
                         ...logoStyle, 
                         width: logoWidth, 
