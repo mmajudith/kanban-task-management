@@ -29,9 +29,8 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
     const pathName = usePathname();
     const [api, contextHolder] = notification.useNotification();
 
-    const { description, isTask, status, subtasks, title } = task;
+    const [ colTask, setColTask ] = useState(task);
     const [isDeleting, setIsDeleting] = useState(false);
-    const [colStatus, setColStatus] = useState(status);
     const { currentTheme, isEditTask, isDeleteTask } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
     const dispatch = useAppDispatch()
@@ -53,7 +52,7 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
             setIsDeleting(false);
             api['error']({message, placement: 'top'});
         }
-        api['success']({message: `${title} task successfully deleted`, placement: 'top'});
+        api['success']({message: `${colTask.title} task successfully deleted`, placement: 'top'});
     
         window.setTimeout(() => {
             dispatch(deleteTask());
@@ -68,8 +67,8 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
     }
 
     const handleStatus = async() => {
-        const prevStatus = status;
-        const currentStatus = colStatus;
+        const prevStatus = task.status;
+        const currentStatus = colTask.status;
         
         if(prevStatus !== currentStatus){
             await shuffletask(boardID, colIndex, index, currentStatus );
@@ -81,7 +80,7 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
         <div onClick={(e) => e.stopPropagation()}>
             <Modal title={
                     <div className="flex-row between" id='task-title' style={{gap: 24, marginBottom: 20, position: 'relative'}}>
-                        {title}
+                        {colTask.title}
                         <DropDown 
                             label1={'Edit Task'} label2={'Delete Task'} 
                             placement={"bottom"} position={'absolute'} 
@@ -90,7 +89,7 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
                     </div>
                 }
                 style={{padding: '15px 0px'}}
-                open={isTask} maskClosable={true} destroyOnClose
+                open={task.isTask} maskClosable={true} destroyOnClose
                 onCancel={(e) => {
                     handleStatus();
                     toggleIsTask(colIndex, index);
@@ -98,14 +97,14 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
                 closeIcon={null} centered footer={null} 
             >
 
-                <Text style={{color: '#828FA3'}}>{description}</Text>
+                <Text style={{color: '#828FA3'}}>{colTask.description}</Text>
 
                 <div style={{margin: '20px 0px'}}>
                     <Text style={{fontSize: 12, fontWeight: 700}}>
-                        {`SubTasks (${subTasksCompleted(subtasks)} of ${subtasks.length})`}
+                        {`SubTasks (${subTasksCompleted(colTask.subtasks)} of ${colTask.subtasks.length})`}
                     </Text>
                     
-                    {subtasks.map(({isCompleted, title}, index) => (
+                    {colTask?.subtasks.map(({isCompleted, title}, index) => (
                         <div key={index} 
                             style={{
                                 marginTop: 10, 
@@ -134,16 +133,21 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
                         Current Status
                     </Text>
                     <Select suffixIcon={<ArrowIcon />} 
-                        onChange={(value) => setColStatus(value)}
+                        onChange={(value) => setColTask({...colTask, status: value})}
                         style={{width: '100%', marginTop: 10}}
-                        options={columnsNames} size='large'
-                        defaultValue={status}
+                        options={columnsNames} size='large' value={colTask.status}
                     />
                 </div>
 
             </Modal>
 
-            {isEditTask && (<EditTask columnsNames={columnsNames} task={task}/>)}
+            {isEditTask && (
+                <EditTask 
+                    columnsNames={columnsNames} 
+                    colTask={colTask}
+                    setColTask={setColTask}
+                />
+            )}
             {isDeleteTask && (
                 <DeleteModal 
                     name={'task'}
@@ -151,7 +155,7 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
                     isDelete={isDeleteTask} 
                     onClick={() => dispatch(deleteTask())}
                     contextHolder={contextHolder}
-                    description={`Are you sure you want to delete the ‘${title}’ task and its subtasks? 
+                    description={`Are you sure you want to delete the ‘${colTask.title}’ task and its subtasks? 
                         This action cannot be reversed.`}
                     onDelete={handleDeleteTask}
                 />

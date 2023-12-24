@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react";
 import { Modal, Form, Input,Typography, Button, Select } from "antd";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { editTask } from "@/redux/features/utilitiesReducer";
@@ -9,25 +9,39 @@ import { btnStyles, colItem, columnsIput, inputStyles } from "@/shared-component
 
 type ETProps = {
     columnsNames: {value: string, label: string}[]
-    task: TasksType
+    colTask: TasksType
+    setColTask: React.Dispatch<React.SetStateAction<TasksType>>
 }
 
-const EditTask = ({ columnsNames, task }: ETProps) => {
-    const { description, status, subtasks, title } = task;
-    const initialValues = {
-        description,
-        isTask: false,
-        status,
+const EditTask = ({ columnsNames, colTask, setColTask }: ETProps) => {
+    const { description, subtasks, title } = colTask;
+    const initialValues = { description,
         subtasks: subtasks.map(subtask => subtask),
         title
     }
 
-    const [isSavingTask, setIsSavingTask] = useState(false);
+    const [ status, setStatus ] = useState(colTask.status);
     const dispatch = useAppDispatch();
     const { currentTheme, isEditTask } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
 
-    return (
+    const onFinish = async (values: any) => {
+        const newEditedTask = { ...values,  
+            isTask: false,
+            status,
+            subtasks: values.subtasks.map((subtask: {title: string, isCompleted: boolean}) => {
+                if(subtask.isCompleted === undefined){
+                    return ({...subtask, isCompleted: false})
+                }
+                return subtask
+            })
+        }
+        
+        setColTask(newEditedTask);
+        dispatch(editTask());
+    }
+
+    return ( 
         <div onClick={(e) => e.stopPropagation()}>
             <Modal title={'Edit Task'} 
                 open={isEditTask} 
@@ -37,7 +51,7 @@ const EditTask = ({ columnsNames, task }: ETProps) => {
                 style={{padding: '15px 0px'}}
             >
                 <Form 
-                    // onFinish={onFinish}
+                    onFinish={onFinish}
                     initialValues={initialValues}
                     layout="vertical" preserve={false}
                     name="edit-task" requiredMark={false}
@@ -101,18 +115,18 @@ const EditTask = ({ columnsNames, task }: ETProps) => {
                     </Typography.Text>
 
                     <Select suffixIcon={<ArrowIcon />} 
+                        onChange={(value) => setStatus(value)}
                         style={{width: '100%', marginTop: 10}}
-                        options={columnsNames} size='large'
-                        defaultValue={status}
+                        options={columnsNames} size='large' value={status}
                     />
 
                     <Form.Item>
                         <Button htmlType="submit" type="primary" style={{
                                 ...btnStyles, marginTop: 24,
-                                cursor: isSavingTask ? 'wait' : 'pointer'
+                                cursor: 'pointer'
                             }}
                         >
-                            {isSavingTask ? 'Saving Changes' : 'Save Changes'}
+                            Update Task
                         </Button>
                     </Form.Item>
                 </Form>
