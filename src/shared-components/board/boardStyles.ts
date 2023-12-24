@@ -5,6 +5,10 @@ export const colContainer: CSSProperties = {
     height: '100%',
     paddingBottom: 50,
     paddingRight: 24,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 24
 };
 
 
@@ -39,6 +43,8 @@ export const colTasksContainer: CSSProperties = {
 };
 
 export const newColWraper: CSSProperties = {
+    width: 300,
+    height: '100%',
     marginTop: 50,
     borderRadius: 6,
 };
