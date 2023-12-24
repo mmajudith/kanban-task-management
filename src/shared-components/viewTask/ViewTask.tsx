@@ -33,7 +33,7 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
     const [isDeleting, setIsDeleting] = useState(false);
     const { currentTheme, isEditTask, isDeleteTask } = useAppSelector(state => state.modalSlice);
     const { isDark } = currentTheme;
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
     const onClick: MenuProps['onClick'] = ({key}) => {
         if(key === '1') dispatch(editTask());

@@ -86,7 +86,10 @@ const Board = ({ columnsNames, board, toggleIsTask }: BProps) => {
                                 }}
                                 className="flex-col center"
                                 >
-                                    <Text style={newColumn} className="new-col">
+                                    <Text onClick={() => dispatch(editBoard())}
+                                        style={newColumn} 
+                                        className="new-col"
+                                    >
                                         + New Column
                                     </Text>
                                 </Col>
