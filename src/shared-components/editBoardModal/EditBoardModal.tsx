@@ -29,7 +29,7 @@ const EditBoardModal = ({ board }: EBMProps) => {
         const editedBoard = { ...values, id: board[0]?.id, columns: values.columns.map((column: {name: string, tasks: []}) =>{
                 return !column.tasks ? ({...column, tasks: []}) : column
             })}
-
+    
         const replaceSpace = editedBoard.name.replaceAll(' ', '-');
         setIsSavingBoard(true);
         
@@ -82,7 +82,7 @@ const EditBoardModal = ({ board }: EBMProps) => {
                         {(fields, { add, remove}) => (
                             <>
                                 {fields.map((field, index) => (
-                                    <div key={field.key}
+                                    <div key={index}
                                         className="flex-row between" 
                                         style={columnsIput}
                                     >
@@ -95,7 +95,7 @@ const EditBoardModal = ({ board }: EBMProps) => {
                                             />
                                         </Form.Item>
 
-                                        <CloseIcon onClick={() => remove(field.name)} style={{cursor: 'pointer'}} />
+                                        <CloseIcon onClick={() => remove(index)} style={{cursor: 'pointer'}} />
                                     </div>
                                 ))}
                                 <Button 
