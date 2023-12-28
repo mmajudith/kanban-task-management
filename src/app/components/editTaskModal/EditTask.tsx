@@ -84,7 +84,7 @@ const EditTask = ({ columnsNames, colTask, setColTask }: ETProps) => {
                         {(fields, { add, remove}) => (
                             <>
                                 {fields.map((field, index) => (
-                                    <div key={field.key}
+                                    <div key={index}
                                         className="flex-row between" 
                                         style={columnsIput}
                                     >
@@ -97,7 +97,7 @@ const EditTask = ({ columnsNames, colTask, setColTask }: ETProps) => {
                                             />
                                         </Form.Item>
 
-                                        <CloseIcon onClick={() => remove(field.name)} style={{cursor: 'pointer'}} />
+                                        <CloseIcon onClick={() => remove(index)} style={{cursor: 'pointer'}} />
                                     </div>
                                 ))}
                                 <Button 

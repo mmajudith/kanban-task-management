@@ -1,12 +1,10 @@
 export type TasksType = {
     description: string
     status: string
-    subtasks: [
-        {
+    subtasks:  {
             isCompleted: boolean
             title: string
-        }
-    ]
+    }[]
     title: string
     isTask: boolean
     id: string 

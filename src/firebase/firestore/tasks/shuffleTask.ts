@@ -4,7 +4,7 @@ import { runTransaction, doc } from 'firebase/firestore';
 
 let colTask:TasksType | false;
 
-const copyAndFilterBoard = (boards: BoardType[], id: string) => {
+export const copyAndFilterBoard = (boards: BoardType[], id: string) => {
     const copiedBoards = [...boards ];
 	const filteredBoard = copiedBoards.filter(board => board.id === id && board);
 

@@ -19,7 +19,7 @@ const BoardTask = ({ boardID, columnsNames, tasks, colIndex, toggleIsTask }: BTP
     const { isDark } = useAppSelector(state => state.modalSlice.currentTheme);
 
     //function that return the total number of subtasks complete
-    const subTasksCompleted = (subtasks: [{isCompleted: boolean}]) => {
+    const subTasksCompleted = (subtasks: {isCompleted: boolean}[]) => {
         const completed = subtasks?.filter((subtask) => subtask.isCompleted === true);
 
         return completed.length ? completed.length : 0;

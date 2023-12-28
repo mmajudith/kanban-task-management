@@ -20,12 +20,13 @@ type VTProps = {
     index: number
     colIndex: number
     toggleIsTask: (colIndex: number, taskIndex: number) => void
-    subTasksCompleted: (subtasks: [{isCompleted: boolean}]) => number
+    subTasksCompleted: (subtasks: {isCompleted: boolean}[]) => number
 }
 
 const { Text } = Typography;
 
 const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, subTasksCompleted }: VTProps) => {
+    console.log(task, 'task!!!!!')
     const pathName = usePathname();
     const [api, contextHolder] = notification.useNotification();
 
@@ -40,8 +41,16 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
         if(key === '2') dispatch(deleteTask());
     }
 
-    const onChange = (e: CheckboxChangeEvent) => {
-        console.log('checked = ', e.target.checked)
+    const onChange = (e: CheckboxChangeEvent, subTaskIndex: number) => {
+        console.log('checked = ', e.target.checked);
+        const { checked } = e.target;
+        const subtasks = colTask.subtasks.map((subTask, index) => {
+            return ({...subTask, isCompleted: index === subTaskIndex ? !subTask.isCompleted : subTask.isCompleted})
+        })
+
+
+        // subTaskChecked(boardID, colIndex, index, subTaskIndex, checked);
+        setColTask({...colTask, subtasks })
     }
 
     const handleDeleteTask = async() => {
@@ -113,7 +122,7 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
                             }}
                             className="flex-row flex-start"
                         >
-                            <Checkbox checked={isCompleted} onChange={onChange} 
+                            <Checkbox checked={isCompleted} onChange={(e) => onChange(e, index)} 
                                 className={`${!isCompleted && `sub-hover`}`}
                                 style={{ width: '100%', borderRadius: 4,
                                     textDecoration: isCompleted ? 'line-through' : 'none',

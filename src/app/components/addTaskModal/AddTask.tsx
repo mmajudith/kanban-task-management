@@ -85,7 +85,7 @@ const AddTask = ({boardID, columnsNames}: ATProps) => {
                         {(fields, { add, remove}) => (
                             <>
                                 {fields.map((field, index) => (
-                                    <div key={field.key}
+                                    <div key={index}
                                         className="flex-row between" 
                                         style={columnsIput}
                                     >
@@ -98,7 +98,7 @@ const AddTask = ({boardID, columnsNames}: ATProps) => {
                                             />
                                         </Form.Item>
 
-                                        <CloseIcon onClick={() => remove(field.name)} style={{cursor: 'pointer'}} />
+                                        <CloseIcon onClick={() => remove(index)} style={{cursor: 'pointer'}} />
                                     </div>
                                 ))}
                                 <Button 
