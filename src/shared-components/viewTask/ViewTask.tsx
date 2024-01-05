@@ -4,6 +4,7 @@ import { Checkbox, Modal, Typography, Select, notification } from "antd";
 import { useAppSelector, useAppDispatch } from "@/redux/store/hook";
 import { postDeletePut } from "@/app/clientApi/postDeletePut";
 import { shuffletask } from "@/firebase/firestore/tasks/shuffleTask";
+import { editTaskHandler } from "@/firebase/firestore/tasks/editTask";
 import { editTask, savedBoard, deleteTask, deletedBoard } from "@/redux/features/utilitiesReducer";
 import type { MenuProps } from "antd";
 import DropDown from "../dropdown/DropDown";
@@ -48,8 +49,6 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
             return ({...subTask, isCompleted: index === subTaskIndex ? !subTask.isCompleted : subTask.isCompleted})
         })
 
-
-        // subTaskChecked(boardID, colIndex, index, subTaskIndex, checked);
         setColTask({...colTask, subtasks })
     }
 
@@ -78,11 +77,13 @@ const ViewTask = ({ boardID, columnsNames, task, index, colIndex, toggleIsTask, 
     const handleStatus = async() => {
         const prevStatus = task.status;
         const currentStatus = colTask.status;
-        
+        const editedTask = { ...colTask, isTask: false}
+        await editTaskHandler(boardID,colIndex,index,editedTask);
+           
         if(prevStatus !== currentStatus){
-            await shuffletask(boardID, colIndex, index, currentStatus );
-            dispatch(savedBoard())
+            await shuffletask(boardID,colIndex,index,currentStatus );
         }
+        dispatch(savedBoard())
     }
 
     return (

@@ -11,7 +11,7 @@ export const copyAndFilterBoard = (boards: BoardType[], id: string) => {
     return { copiedBoards, filteredBoard }
 }
 
-const modifyBoard = (boards: BoardType[], newColumns: ColumnType, id: string) => {
+export const modifyBoard = (boards: BoardType[], newColumns: ColumnType, id: string) => {
     return boards.map((board) => {
 		return board.id === id
 			? (board = {
