@@ -29,7 +29,7 @@ Users are able to:
 
 ### Screenshot
 
-![](https://raw.github.com/mmajudith/kanban-task-management/master/web-app-screen-shot.PNG)
+![](screenshot.png)
 
 ### Links
 
