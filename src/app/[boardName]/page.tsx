@@ -9,7 +9,10 @@ export default function Board({params: {boardName}}: { params: { boardName: stri
 
   return (
     <Layout.Content className="w-100 auto">
-      <SingleBoard board={ board } toggleIsTask={toggleIsTask}/>
+      <SingleBoard 
+        board={ board } 
+        toggleIsTask={toggleIsTask}
+      />
     </Layout.Content>
   )
 }
