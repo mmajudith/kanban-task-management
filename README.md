@@ -29,12 +29,12 @@ Users are able to:
 
 ### Screenshot
 
-![](./web-app-screen-shot.PNG)
+![](/web-app-screen-shot.PNG?raw=true)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://github.com/mmajudith/kanban-task-management)
-- Live Site URL: [Add live site URL here](https://kanban-task-management-zeta.vercel.app/)
+- Solution URL: [here](https://github.com/mmajudith/kanban-task-management)
+- Live Site URL: [here](https://kanban-task-management-zeta.vercel.app/)
 
 ## My process
 
